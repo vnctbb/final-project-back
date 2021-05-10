@@ -3,8 +3,6 @@
 const mongoose = require('mongoose');
 const passport = require('passport');
 
-const User = mongoose.model('User');
-
 exports.authenticate = (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
         if(err){

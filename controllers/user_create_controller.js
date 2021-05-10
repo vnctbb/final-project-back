@@ -14,10 +14,10 @@ exports.createUser = (req, res, next) => {
 
     user.save((err, doc) => {
         if(!err){
-            res.send('user created');
+            res.status(200).json({status : true, message : 'User created'})
         } else {
             if(err.code === 11000){
-                res.status(422).send(['Given email address already used'])
+                res.status(422).json({status : false, message : 'Provided email already used'})
             } else {
                 return next(err)
             }

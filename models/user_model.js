@@ -9,21 +9,21 @@ const validator = require('../validators/user_email_validator')
 var userSchema = new mongoose.Schema({
     email : {
         type : String,
-        required: 'Email params not given',
+        required: 'Email params required',
         unique: true
     },
     password : {
         type : String,
-        required: 'Password params not given',
+        required: 'Password params required',
         minlength : [8,'Password must be at least 8 character long']
     },
     firstName: {
         type : String,
-        required: 'FirstName params not given'
+        required: 'FirstName params required'
     },
     lastName: {
         type : String,
-        required: 'LastName params not given'
+        required: 'LastName params required'
     },
     saltSecret: String
 });
@@ -45,7 +45,10 @@ userSchema.methods.verifyPassword = function (password) {
 };
 
 userSchema.methods.generateJwt = function () {
-    return jwt.sign({ _id : this._id}, process.env.JWT_SECRET);
+    return jwt.sign({ _id : this._id}, process.env.JWT_SECRET,
+        {
+            expiresIn : process.env.JWT_EXP
+        });
 }
 
 mongoose.model('User', userSchema, 'users');
