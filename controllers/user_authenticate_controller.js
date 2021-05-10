@@ -14,3 +14,7 @@ exports.authenticate = (req, res, next) => {
         }
     })(req, res);
 };
+
+exports.checkSecurityLevel = (req, res, next) => {
+    console.log(req._id);
+}
