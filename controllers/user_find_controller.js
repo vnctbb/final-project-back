@@ -6,6 +6,8 @@ const User = mongoose.model('User')
 
 exports.findOneByEmail = (req, res, next) => {
 
+    console.log('find user with id : ' + req.body.params.email)
+
     const fields = [
         'email',
         'firstName',
