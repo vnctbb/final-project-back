@@ -8,4 +8,6 @@ mongoose.connect(process.env.DB_URL,  { useNewUrlParser: true, useUnifiedTopolog
     else {console.log(`MongoDB connection failed : ${err}`)}
 });
 
-require('../models/user_model')
+require('../src/user/model/user_model')
+require('../src/friend/model/friend_model')
+require('../src/post/model/post_model')

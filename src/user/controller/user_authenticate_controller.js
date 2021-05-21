@@ -4,8 +4,11 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 
 exports.authenticate = (req, res, next) => {
+    console.log('ici')
     passport.authenticate('local', (err, user, info) => {
+        console.log(user)
         if(err){
+            console.log("ERR => ", err)
             return res.status(400).json(err);
         } else if(user){
             return res.status(200).json({ "token" : user.generateJwt() });

@@ -1,0 +1,7 @@
+TEST user, post, friend
+
+Routes topic, topicmessage, postcom
+
+Chat :
+
+réfléchir à la structure (entité conversation + messageconversation ??)
