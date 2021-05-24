@@ -8,9 +8,11 @@ update rajouter erreur si not found comme dans topic.update
 
 find rajouter erreur si not found comme dans topic.find
 
-post.find update comme dans topic.find
+changer erreur find.list if len == 0 erreur else renvoi array
 
 USER :
+
+limiter la longueur de certain champs
 
 Supprimer user implique d'autre suppression
 
@@ -19,6 +21,8 @@ rajouter un find by email pour le user?
 FRIEND :
 
 POST :
+
+post.find update comme dans topic.find
 
 ajouter like & unlike (est-ce que c'est une table à part? pourquoi pas !)
 

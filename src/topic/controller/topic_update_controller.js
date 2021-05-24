@@ -26,7 +26,7 @@ exports.updateTopic = (req, res, next) => {
             if (!err) {
                 res.status(200).json({status : true, message : 'Topic updated', id : validParams._id})
             } else {
-                return res.status(404).json({status : false, message : `Error updating post => ${err}`});
+                return res.status(404).json({status : false, message : `Error updating topic => ${err}`});
             }
         } else {
             return res.status(404).json({status : false, message : `Error : Topic not found`});

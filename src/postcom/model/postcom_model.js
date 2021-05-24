@@ -27,10 +27,6 @@ var postComSchema = new mongoose.Schema({
         required: 'Content parameters required',
         maxlength : [360,'Content maximum length is 360 characters'],
         default: null
-    },
-    like : {
-        type : Number,
-        default: null
     }
 });
 
