@@ -17,7 +17,7 @@ exports.createUser = (req, res, next) => {
 
     user_create_repository.create(user, (err) => {
         if(!err){
-            res.status(200).json({status : true, message : 'User created'})
+            res.status(200).json({status : true, message : 'User created', id : user._id})
         } else {
             if(err.code === 11000){
                 console.log(err)

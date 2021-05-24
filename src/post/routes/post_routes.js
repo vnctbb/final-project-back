@@ -11,7 +11,7 @@ const post_find_controller = require('../controller/post_find_controller');
 const post_update_controller = require('../controller/post_update_controller');
 const post_delete_controller = require('../controller/post_delete_controller.js');
 
-router.post('/create', authentication.verifyJwtToken, post_create_controller.createPost);
+router.post('/create', post_create_controller.createPost);
 
 router.post('/find', authentication.verifyJwtToken, post_find_controller.findOneById);
 
@@ -19,7 +19,7 @@ router.post('/find/list', authentication.verifyJwtToken, post_find_controller.fi
 
 router.post('/find/list/author', authentication.verifyJwtToken, post_find_controller.findListByAuthorId);
 
-router.post('/update', authentication.verifyJwtToken, post_update_controller.updatePost);
+router.post('/update', post_update_controller.updatePost);
 
 router.post('/delete', authentication.verifyJwtToken, post_delete_controller.deletePost);
 

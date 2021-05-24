@@ -12,6 +12,7 @@ const bodyParser = require('body-parser');
 const user_route = require('./src/user/routes/user_routes');
 const friend_route = require('./src/friend/routes/friend_routes');
 const post_route = require('./src/post/routes/post_routes');
+const topic_route = require('./src/topic/routes/topic_routes');
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/user', user_route);
 app.use('/friend', friend_route);
 app.use('/post', post_route);
+app.use('/topic', topic_route);
 
 // Error management
 app.use((err, req, res, next) => {

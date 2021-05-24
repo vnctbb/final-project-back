@@ -1,7 +1,42 @@
+TODO :
+
 TEST user, post, friend
 
+update rajouter une condition pour les champs que je ne veux pas modifier
+
+update rajouter erreur si not found comme dans topic.update
+
+find rajouter erreur si not found comme dans topic.find
+
+post.find update comme dans topic.find
+
+USER :
+
+Supprimer user implique d'autre suppression
+
+rajouter un find by email pour le user?
+
+FRIEND :
+
+POST :
+
+ajouter like & unlike (est-ce que c'est une table à part? pourquoi pas !)
+
+(erreur update post => error wrong id)
+
 Routes topic, topicmessage, postcom
+
+limiter length title topic, et autre champ de texte
 
 Chat :
 
 réfléchir à la structure (entité conversation + messageconversation ??)
+
+
+DONE :
+
+rajouter ID quand je créé un nouveau user, ou que je créé quelque chose;
+
+rajouter erreur dans friend create si premier user existe pas;
+
+valider les paramètres de update si je veux limiter les champs à update;

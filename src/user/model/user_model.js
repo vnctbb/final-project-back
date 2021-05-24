@@ -54,10 +54,6 @@ var userSchema = new mongoose.Schema({
         type : String,
         default: null
     },
-    friends: {
-        type : String,
-        default: null
-    },
     profil_picture: {
         type : String,
         default: null

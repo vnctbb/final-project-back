@@ -1,13 +1,14 @@
 'use strict'
 
-exports.friendUpdateParams = (params) => {
+exports.updateValidator = (params) => {
     const validParams = {};
 
     if (params.status){
         if(params.status === "ACCEPTED" || params.status === "REJECTED"){
             validParams.status = params.status;
+            return validParams
         }
     }
     
-    return validParams;
+    return undefined;
 }

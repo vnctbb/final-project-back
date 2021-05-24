@@ -15,7 +15,7 @@ exports.createPost = (req, res, next) => {
 
     post.save((err, doc) => {
         if(!err){
-            res.status(200).json({status : true, message : 'Post created'})
+            res.status(200).json({status : true, message : 'Post created', id : doc._id})
         } else {
             return next(err)
         }
