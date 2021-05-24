@@ -6,12 +6,16 @@ const _ = require('lodash');
 const User = mongoose.model('User');
 
 exports.userProfile = (req, res, next) => {
-    User.findOne({_id : req._id}, (err, user) => {
+
+    User.findOne({_id : req._id}, {password : 0, saltSecret : 0, __v : 0}, (err, user) => {
         if(!user){
             return res.status(404).json({status : false, message : 'User record not found.'});
         } else {
-            console.log(user)
-            return res.status(200).json({status : true, user : _.pick(user, ['first_name', 'email_address'])});
+            if(!err){
+                return res.status(200).json({status : true, user : user});
+            } else {
+                return next(err);
+            }
         }
     })
 }

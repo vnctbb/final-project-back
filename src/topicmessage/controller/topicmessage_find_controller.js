@@ -16,7 +16,7 @@ exports.findTopicMessage = (req, res, next) => {
     TopicMessage.findOne({_id : req.body.topicmessage_id}, {__v : 0}, (err, topicmessage) => {
         if(topicmessage){
             if(!err){
-                res.json(topicmessage);
+                return res.status(200).json({status : true, topicmessage : topicmessage});
             } else {
                 return next(err);
             }

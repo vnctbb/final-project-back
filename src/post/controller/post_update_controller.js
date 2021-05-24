@@ -21,12 +21,16 @@ exports.updatePost = (req, res, next) => {
 
     req._id = "123"
 
-    Post.findOneAndUpdate({_id : req.body._id, author_id : req._id}, { $set: validParams }, (err, post) => {
-        if (!err) {
-            res.status(200).json({status : true, message : 'Post updated', id : post._id})
-        } else {
-            return res.status(404).json({status : false, message : `Error updating post => ${err}`});
-        }
-    });
+    if(req.body._id){
+        Post.findOneAndUpdate({_id : req.body._id, author_id : req._id}, { $set: validParams }, (err, post) => {
+            if (!err) {
+                res.status(200).json({status : true, message : 'Post updated', id : post._id})
+            } else {
+                return res.status(404).json({status : false, message : `Error updating post => ${err}`});
+            }
+        });
+    } else {
+        return res.status(400).json({status : false, message : 'Invalid parameters'});
+    }
 
 };

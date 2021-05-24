@@ -9,11 +9,19 @@ const option_validator = ('../validator/list_params_validator');
 
 exports.findOneById = (req, res, next) => {
 
-    Post.findOne({_id : req.body._id}, {__v : 0}, (err, post) => {
-        if(!err){
-            res.json(post);
+    if(!req.body.post_id){
+        return res.status(400).json({status : false, message : "Error : Invalid parameters"});
+    }
+
+    Post.findOne({_id : req.body.post_id}, {__v : 0}, (err, post) => {
+        if(post){
+            if(!err){
+                return res.status(200).json({status : true, post : post});
+            } else {
+                return next(err);
+            }
         } else {
-            return next(err);
+            return res.status(400).json({status : false, message : "Error : Post not found"});
         }
     });
 
@@ -37,10 +45,14 @@ exports.findList = (req, res, next) => {
     }
 
     Post.find(filter, {__v : 0}, optionV, (err, posts) => {
-        if(!err){
-            return res.status(200).json({status : true, posts : posts});
+        if(posts.len == 0){
+            return res.status(400).json({status : false, message : "Error : Post not found"});
         } else {
-            return next(err);
+            if(!err){
+                return res.status(200).json({status : true, posts : posts});
+            } else {
+                return next(err);
+            }
         }
     });
 
@@ -48,20 +60,36 @@ exports.findList = (req, res, next) => {
 
 exports.findListByAuthorId = (req, res, next) => {
 
-    const optionV = option_validator.optionValidator(req.body.params);
+    let optionV = {};
 
-    User.findOne({_id : req.body.params.author_id}, {__v : 0}, optionV, (err, user) => {
-        if(!err){
-            Post.find({author_id : req.body.params.author_id}, {__v : 0, author_id : 0}, (err, posts) => {
+    if(req.body.params){
+        optionV = option_validator.optionValidator(req.body.params);
+    }
+
+    if(req.body.author_id){
+        User.findOne({_id : req.body.params.author_id}, {__v : 0}, optionV, (err, user) => {
+            if(user){
                 if(!err){
-                    return res.status(200).json({status : true, posts : posts, author_id : req.body.params.author_id});
+                    Post.find({author_id : req.body.params.author_id}, {__v : 0, author_id : 0}, (err, posts) => {
+                        if(posts.len == 0){
+                            return res.status(400).json({status : false, message : "Error : Posts not found"});
+                        } else {
+                            if(!err){
+                                return res.status(200).json({status : true, posts : posts});
+                            } else {
+                                return next(err);
+                            }
+                        }
+                    });
                 } else {
-                    return next(err)
+                    return next(err);
                 }
-            });
-        } else {
-            return next(err);
-        }
-    });
+            } else {
+                return res.status(400).json({status : false, message : "Error : Author not found"});
+            }
+        });
+    } else {
+        return res.status(400).json({status : false, message : "Error : Invalid parameters"});
+    }
 };
 

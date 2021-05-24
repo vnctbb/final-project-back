@@ -22,10 +22,6 @@ var postSchema = new mongoose.Schema({
         required: 'Content empty',
         maxlength : [360,'Content maximum length is 360 characters'],
         default: null
-    },
-    like : {
-        type : Number,
-        default: null
     }
 });
 

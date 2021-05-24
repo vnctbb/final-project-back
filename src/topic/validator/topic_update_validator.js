@@ -3,10 +3,8 @@
 exports.updateValidator = (params) => {
     const validParams = {};
 
-    if (params._id){
-        validParams._id = params._id
-    } else {
-        return undefined
+    if(params._id || params.__v || params.owner_id || params.creation_datetime){
+        return undefined;
     }
 
     if (params.topic_name){

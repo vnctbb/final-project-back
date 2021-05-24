@@ -1,46 +1,64 @@
 TODO :
 
-TEST user, post, friend
+TEST user, post, postcom, like, friend, topic, topicmessage
 
-update rajouter une condition pour les champs que je ne veux pas modifier
-
-update rajouter erreur si not found comme dans topic.update
-
-find rajouter erreur si not found comme dans topic.find
-
-changer erreur find.list if len == 0 erreur else renvoi array
+aggreger des données pour certaine requête (post + com + like?)
 
 USER :
 
-limiter la longueur de certain champs
-
-Supprimer user implique d'autre suppression
-
-rajouter un find by email pour le user?
+Supprimer user implique d'autre suppression => pareil pour les autres entités (genre post/postcom/like)
 
 FRIEND :
 
 POST :
 
-post.find update comme dans topic.find
+LIKE :
 
-ajouter like & unlike (est-ce que c'est une table à part? pourquoi pas !)
+table & routes
 
-(erreur update post => error wrong id)
-
-Routes topic, topicmessage, postcom
-
-limiter length title topic, et autre champ de texte
-
-Chat :
+CHAT :
 
 réfléchir à la structure (entité conversation + messageconversation ??)
 
+Notification :
+
+table & routes
+
+
+
+
 
 DONE :
+
 
 rajouter ID quand je créé un nouveau user, ou que je créé quelque chose;
 
 rajouter erreur dans friend create si premier user existe pas;
 
 valider les paramètres de update si je veux limiter les champs à update;
+
+Routes topic, topicmessage, postcom;
+
+limiter length title topic, et autre champ de texte;
+
+post.find update comme dans topic.find;
+
+find rajouter erreur si not found comme dans topic.find;
+
+changer erreur find.list if len == 0 erreur else renvoi array;
+
+update rajouter erreur si not found comme dans topic.update;
+
+like table & routes;
+
+update rajouter une condition pour les champs que je ne veux pas modifier;
+
+
+
+
+NOT NECESSARY FOR NOW :
+
+
+(erreur update post => error wrong id);
+
+rajouter un find by email pour le user;

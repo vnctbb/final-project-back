@@ -12,6 +12,8 @@ const bodyParser = require('body-parser');
 const user_route = require('./src/user/routes/user_routes');
 const friend_route = require('./src/friend/routes/friend_routes');
 const post_route = require('./src/post/routes/post_routes');
+const postcom_route = require('./src/postcom/routes/postcom_routes');
+const like_route = require('./src/like/routes/like_routes');
 const topic_route = require('./src/topic/routes/topic_routes');
 const topicmessage_route = require('./src/topicmessage/routes/topicmessage_routes');
 
@@ -34,6 +36,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/user', user_route);
 app.use('/friend', friend_route);
 app.use('/post', post_route);
+app.use('/postcom', postcom_route);
+app.use('/like', like_route);
 app.use('/topic', topic_route);
 app.use('/topicmessage', topicmessage_route);
 

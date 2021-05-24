@@ -1,11 +1,11 @@
 'use strict'
 
 const mongoose = require('mongoose')
-const Topic = mongoose.model('Topic')
+const PostCom = mongoose.model('PostCom')
 
-const updateValidator = require('../validator/topic_update_validator');
+const updateValidator = require('../validator/postcom_update_validator');
 
-exports.updateTopic = (req, res, next) => {
+exports.updatePostCom = (req, res, next) => {
 
     let validParams;
 
@@ -21,16 +21,16 @@ exports.updateTopic = (req, res, next) => {
 
     req._id = "60a7729837b47452b8c5483e"
 
-    if(req.body._id){
-        Topic.findOneAndUpdate({_id : req.body._id, owner_id : req._id}, { $set: validParams }, (err, topic) => {
-            if(topic){
+    if(req.body.id){
+        PostCom.findOneAndUpdate({_id : req.body._id, author_id : req._id}, { $set: validParams }, (err, com) => {
+            if(com){
                 if (!err) {
-                    res.status(200).json({status : true, message : 'Topic updated', id : validParams._id})
+                    res.status(200).json({status : true, message : 'PostCom updated', id : validParams._id})
                 } else {
-                    return res.status(404).json({status : false, message : `Error updating topic => ${err}`});
+                    return res.status(404).json({status : false, message : `Error updating PostCom => ${err}`});
                 }
             } else {
-                return res.status(404).json({status : false, message : `Error : Topic not found`});
+                return res.status(404).json({status : false, message : `Error : PostCom not found`});
             }
         });
     } else {

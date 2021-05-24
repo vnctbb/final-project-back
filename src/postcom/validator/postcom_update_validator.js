@@ -3,7 +3,7 @@
 exports.updateValidator = (params) => {
     const validParams = {};
 
-    if(params._id || params.__v || params.topic_id || params.author_id || params.creation_datetime){
+    if(params._id || params.__v || params.post_id || params.creation_datetime || author_id){
         return undefined;
     }
 

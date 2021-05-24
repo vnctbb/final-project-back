@@ -29,7 +29,7 @@ exports.createFriend = (req, res, next) => {
                 } else {
                     friend.save((err, doc) => {
                         if(!err){
-                            res.status(200).json({status : true, message : 'Friend created', id : friend._id})
+                            res.status(200).json({status : true, message : 'Friend created', id : doc._id})
                         } else {
                             return next(err)
                         }

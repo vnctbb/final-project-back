@@ -10,6 +10,7 @@ var userSchema = new mongoose.Schema({
     email_address : {
         type : String,
         required: 'Email parameters required',
+        maxlength : [100,'email_address maximum length is 100 character'],
         unique: true,
         default: null
     },
@@ -22,32 +23,39 @@ var userSchema = new mongoose.Schema({
     first_name: {
         type : String,
         required: 'Firstname parameters required',
+        maxlength : [50,'first_name maximum length is 50 character'],
         default: null
     },
     last_name: {
         type : String,
         required: 'Lastname parameters required',
+        maxlength : [50,'last_name maximum length is 50 character'],
         default: null
     },
     genre: {
         type : String,
+        maxlength : [1,'genre maximum length is 1 character'],
         default: null
     },
     age: {
         type : String,
+        maxlength : [3,'genre maximum length is 3 character'],
         default: null
     },
     phone_number: {
         type : String,
+        maxlength : [20,'genre maximum length is 20 character'],
         default: null
     },
     country: {
         type : String,
         required: 'Country parameters required',
+        maxlength : [50,'genre maximum length is 50 character'],
         default: null
     },
     presentation: {
         type : String,
+        maxlength : [500,'genre maximum length is 500 character'],
         default: null
     },
     favorites: {
