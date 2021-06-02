@@ -3,27 +3,27 @@
 const mongoose = require('mongoose');
 
 var topicSchema = new mongoose.Schema({
-    owner_id : {
+    ownerId : {
         type : String,
         required: 'Owner ID parameters required',
         default: null
     },
-    creation_datetime : {
+    creationDatetime : {
         type : String,
         required: 'Creation datetime parameters required',
         default: null
     },
-    modification_datetime : {
+    modificationDatetime : {
         type : String,
         default: null
     },
-    topic_name : {
+    topicName : {
         type : String,
         required: 'Topic name parameters required',
         maxlength : [180,'Name maximum length is 180 characters'],
         default: null
     },
-    topic_description : {
+    topicDescription : {
         type : String,
         required: 'Topic description parameters required',
         maxlength : [500,'Content maximum length is 500 characters'],

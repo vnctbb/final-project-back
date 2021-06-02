@@ -5,29 +5,32 @@ const User = mongoose.model('User');
 const Post = mongoose.model('Post');
 const PostCom = mongoose.model('PostCom');
 
-const option_validator = require('../validator/list_params_validator');
+const option_validator = require('../../validator/list_option_validator');
 
-exports.findPostCom = (req, res, next) => {
+exports.findOne = async (req, res, next) => {
 
-    if(!req.body.postcom_id){
+    if(!req.body.postcomId){
         return res.status(400).json({status : false, message : "Error : Invalid parameters"});
     }
 
-    PostCom.findOne({_id : req.body.postcom_id}, {__v : 0}, (err, postcom) => {
-        if(postcom){
-            if(!err){
-                return res.status(200).json({status : true, postcom : postcom});
-            } else {
-                return next(err);
-            }
-        } else {
-            return res.status(400).json({status : false, message : "Error : PostCom not found"});
-        }
-    });
+    let postCom;
+    try {
+        postCom = await  PostCom.findOne({_id : req.body.postcomId}, {__v : 0});
+    } catch (err) {
+
+        return res.status(400).json({status : false, error : err});
+    }
+
+    if (!postCom){
+
+        return res.status(400).json({status : false, message : "Error : PostCom not found"});
+    }
+
+    return res.status(200).json({status : true, postCom : postCom});
 
 };
 
-exports.findListByPostID = (req, res, next) => {
+exports.listByPostID = async (req, res, next) => {
 
     let optionV = {};
 
@@ -35,26 +38,40 @@ exports.findListByPostID = (req, res, next) => {
         optionV = option_validator.optionValidator(req.body.params);
     }
 
-    if(req.body.post_id){
-        Post.findOne({_id : req.body.post_id}, {__v : 0}, optionV, (err, post) => {
-            if(post){
-                PostCom.find({post_id : req.body.post_id}, {__v : 0, post_id : 0}, (err, coms) => {
-                    if(coms.len == 0){
-                        return res.status(400).json({status : false, message : "Error : PostComs not found"});
-                    } else {
-                        return res.status(200).json({status : true, postcoms : coms, post_id : req.body.post_id});
-                    }
-                });
-            } else {
-                return res.status(400).json({status : false, message : "Error : Author not found"});
-            }
-        });
-    } else {
+    if(!req.body.params.postId){
         return res.status(400).json({status : false, message : "Error : Invalid parameters"});
     }
+
+    let post;
+    try {
+        post = await Post.findOne({_id : req.body.params.postId}, {__v : 0});
+    } catch (err) {
+
+        return res.status(400).json({status : false, error : err});
+    }
+
+    if (!post){
+
+        return res.status(400).json({status : false, message : "Error : Post not found"});
+    }
+
+    let postComs;
+    try {
+        postComs = await PostCom.find({postId : req.body.params.postId}, {__v : 0, postId : 0}, optionV);
+    } catch (err) {
+
+        return res.status(400).json({status : false, error : err});
+    }
+    if (postComs.length == 0){
+
+        return res.status(400).json({status : false, message : "Error : PostComs not found"});
+    }
+
+    return res.status(200).json({status : true, postcoms : postComs, postId : req.body.params.postId});
+
 };
 
-exports.findListByAuthorID = (req, res, next) => {
+exports.listByAuthorID = async (req, res, next) => {
 
     let optionV = {};
 
@@ -62,22 +79,36 @@ exports.findListByAuthorID = (req, res, next) => {
         optionV = option_validator.optionValidator(req.body.params);
     }
 
-    if(req.body.author_id){
-        User.findOne({_id : req.body.author_id}, {__v : 0}, optionV, (err, user) => {
-            if(user){
-                PostCom.find({author_id : req.body.author_id}, {__v : 0, author_id : 0}, (err, coms) => {
-                    if(coms.len == 0){
-                        return res.status(400).json({status : false, message : "Error : PostComs not found"});
-                    } else {
-                        return res.status(200).json({status : true, postcoms : coms, author_id : req.body.author_id});
-                    }
-                });
-            } else {
-                return res.status(400).json({status : false, message : "Error : Author not found"});
-            }
-        });
-    } else {
+    if (!req.body.params.authorId){
         return res.status(400).json({status : false, message : "Error : Invalid parameters"});
     }
+
+    let author;
+    try {
+        author = await User.findOne({_id : req.body.params.authorId}, {__v : 0});
+    } catch (err) {
+
+        return res.status(400).json({status : false, error : err});
+    }
+
+    if (!author){
+
+        return res.status(400).json({status : false, message : "Error : Author not found"});
+    }
+
+    let postComs;
+    try {
+        postComs = await PostCom.find({author_id : req.body.params.authorId}, {__v : 0, author_id : 0}, optionV);
+    } catch (err) {
+
+        return res.status(400).json({status : false, error : err});
+    }
+    
+    if (postComs.length == 0){
+
+        return res.status(400).json({status : false, message : "Error : PostComs not found"});
+    }
+
+    return res.status(200).json({status : true, postcoms : postComs, authorId : req.body.params.authorId});
 };
 

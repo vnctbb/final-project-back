@@ -3,17 +3,17 @@
 const mongoose = require('mongoose');
 
 var likeSchema = new mongoose.Schema({
-    user_id : {
+    userId : {
         type : String,
         required: 'User id parameters required',
         default: null
     },
-    post_id : {
+    postId : {
         type : String,
         required: 'Related id parameters required',
         default: null
     },
-    creation_datetime : {
+    creationDatetime : {
         type : String,
         required: 'Creation datetime empty',
         default: null

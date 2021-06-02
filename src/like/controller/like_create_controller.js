@@ -5,23 +5,39 @@ const mongoose = require('mongoose');
 const Post = mongoose.model('Post');
 const Like = mongoose.model('Like');
 
-exports.createLike = (req, res, next) => {
+exports.createLike = async (req, res, next) => {
     const like = new Like(req.body.params);
-    req._id = "60aa1871098a180559a335df";
+    req._id = "60ae71dbd5143b9e0bf3e9b6";
 
-    like.user_id = req._id;
+    like.userId = req._id;
 
-    Post.findOne({_id : like.post_id}, (err, post) => {
-        if(post){
-            like.save((err, doc) => {
-                if(!err){
-                    res.status(200).json({status : true, message : 'Like created', id : doc._id})
-                } else {
-                    return next(err)
-                }
-            })
-        } else {
-            return res.status(400).json({status : false, message : "Error : Post not found"});
-        }
-    })
+    let post; 
+    try {
+
+        post = await Post.findOne({_id : like.postId});
+    } catch (err) {
+
+        return res.status(400).json({status : false, error : err});
+    }
+
+    if (!post){
+
+        return res.status(400).json({status : false, message : "Error : Post not found"});
+    }
+
+    let doc;
+    try {
+        doc = await like.save();
+    } catch (err) {
+
+        return res.status(400).json({status : false, error : err});
+    }
+    
+    if (!doc){
+
+        return res.status(400).json({status : false, message : "Error : Like not created"});
+    }
+
+    res.status(200).json({status : true, message : 'Like created', id : doc._id})
+
 }

@@ -3,7 +3,7 @@
 exports.updateValidator = (params) => {
     const validParams = {};
 
-    if(params._id || params.__v || params.sender_id || params.receiver_id || params.creation_datetime){
+    if(params._id || params.__v || params.senderId || params.receiverId || params.creationDatetime){
         return undefined;
     }
 

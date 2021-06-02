@@ -19,22 +19,24 @@ exports.updateFriend = (req, res, next) => {
         return res.status(400).json({status : false, message : 'Invalid parameters'});
     }
 
-    req._id = "60aa18e2757e300587169a14";
+    req._id = "60b68d88a9ff4a38f0fca08f";
 
-    if(req.body._id){
-        Friend.findOneAndUpdate({_id : req.body._id, receiver_id : req._id}, { $set: validParams }, (err, user) => {
-            if (!err) {
-                if(user){
-                    res.status(200).json({status : true, message : 'Friend updated'})
-                } else {
-                    return res.status(404).json({status : false, message : `Error updating friend => friend not found`});
-                }
+    if (!req.body.friendId){
+
+        return res.status(400).json({status : false, message : 'Invalid parameters'});
+    }
+
+    try {
+        Friend.findOneAndUpdate({_id : req.body.friendId, receiverId : req._id}, { $set: validParams }, {useFindAndModify : false}, (err, user) => {
+            if(user){
+                res.status(200).json({status : true, message : 'Friend updated'})
             } else {
-                return res.status(404).json({status : false, message : `Error updating friend => ${err}`});
+                return res.status(404).json({status : false, message : `Error updating friend => friend not found`});
             }
         });
-    } else {
-        return res.status(400).json({status : false, message : 'Invalid parameters'});
+    } catch (err) {
+
+        return res.status(400).json({status : false, error : err});
     }
 
 };

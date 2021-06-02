@@ -3,14 +3,14 @@
 exports.updateValidator = (params) => {
     const validParams = {};
 
-    if(params._id || params.__v || params.author_id || params.creation_datetime){
+    if(params._id || params.__v || params.authorId || params.creationDatetime){
         return undefined;
     }
 
     if (params.content){
         validParams.content = params.content;
 
-        validParams.modification_datetime = params.modification_datetime;
+        validParams.modificationDatetime = params.modificationDatetime;
 
         return validParams
     }

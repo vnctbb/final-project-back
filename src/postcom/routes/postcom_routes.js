@@ -13,11 +13,11 @@ const postcom_delete_controller = require('../controller/postcom_delete_controll
 
 router.post('/create', postcom_create_controller.createPostCom);
 
-router.post('/find', postcom_find_controller.findPostCom);
+router.post('/find', postcom_find_controller.findOne);
 
-router.post('/find/post', postcom_find_controller.findListByPostID);
+router.post('/list/post', postcom_find_controller.listByPostID);
 
-router.post('/find/author', postcom_find_controller.findListByAuthorID);
+router.post('/list/author', postcom_find_controller.listByAuthorID);
 
 router.post('/update', postcom_update_controller.updatePostCom);
 

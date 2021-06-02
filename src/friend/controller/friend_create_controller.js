@@ -7,7 +7,7 @@ const User = mongoose.model('User');
 
 const create_validator = require('../validator/friend_create_validator');
 
-exports.createFriend = (req, res, next) => {
+exports.createFriend = async (req, res, next) => {
     let validParams;
 
     if(req.body.params){
@@ -17,27 +17,69 @@ exports.createFriend = (req, res, next) => {
     }
 
     const friend = new Friend(validParams);
-    req._id = "60aa1871098a180559a335df";
+    req._id = "60b4ba2c4d69620b8b3e7217";
 
-    friend.sender_id = req._id;
+    friend.senderId = req._id;
 
-    User.findOne({_id : friend.receiver_id}, (err, user) => {
-        if(user){
-            Friend.findOne({sender_id : friend.sender_id, receiver_id : friend.receiver_id, status : ["WAITING", "ACCEPTED"]}, (err,  dbFriend) => {
-                if(dbFriend){
-                    res.status(500).json({status : true, message : `Already created => status ${dbFriend.status}`, id : dbFriend._id})
-                } else {
-                    friend.save((err, doc) => {
-                        if(!err){
-                            res.status(200).json({status : true, message : 'Friend created', id : doc._id})
-                        } else {
-                            return next(err)
-                        }
-                    })
-                } 
-            })
-        } else {
-            return next(err);
+    let user;
+    try {
+        user = await User.findOne({_id : friend.receiverId});
+    } catch (err){
+        console.log("User findOne error :", err)
+
+        res.status(400).json({status : false, error : err, message : "Error : User not found"})
+    }
+        
+    if (!user){
+
+        res.status(400).json({status : false, message : "Error : User not found"})
+    }
+
+    let dbFriend;
+    try {
+        
+        dbFriend = await Friend.findOne({senderId : friend.senderId, receiverId : friend.receiverId});
+    } catch (err){
+
+        res.status(400).json({status : false, error : err, message : "Error : Friend not found"})
+    }
+
+    if(dbFriend){
+        if (dbFriend.status == "WAITING" || dbFriend.status == "ACCEPTED"){
+    
+            res.status(500).json({status : true, message : `Already created => status ${dbFriend.status}`, id : dbFriend._id})
         }
-    })
+    
+        if(dbFriend.status == "REJECTED"){
+    
+            let friend;
+            try {
+                friend = await Friend.findOneAndUpdate({_id : req.body.friendId, receiverId : req._id}, { $set: validParams }, {useFindAndModify : false});
+            } catch (err){
+
+                res.status(400).json({status : false, error : err, message : "Error : Friend not created"})
+            }
+    
+            if(friend){
+                res.status(200).json({status : true, message : 'Friend updated'})
+            }
+        }
+    }
+
+    let doc;
+    try {
+        doc = await friend.save();
+
+    } catch (err){
+
+        res.status(400).json({status : false, error : err, message : "Error : Friend not created"})
+    };
+
+    if (!doc){
+
+        res.status(400).json({status : false, message : "Error : Friend not created"})
+    }
+
+    res.status(200).json({status : true, message : 'Friend created', id : doc._id})
+    
 }

@@ -16,12 +16,13 @@ router.post('/update', friend_update_controller.updateFriend);
 
 router.post('/exist', friend_find_controller.exist);
 
-router.post('/findOne', friend_find_controller.findOneById);
+router.post('/find', friend_find_controller.findOne);
 
-router.post('/find/in', friend_find_controller.findInFriendListByUser);
+router.post('/list/in', friend_find_controller.listInByUser);
 
-router.post('/find/out', friend_find_controller.findOutFriendListByUser);
+router.post('/list/out', friend_find_controller.listOutByUser);
 
-router.post('/find/accepted', friend_find_controller.findAcceptedFriendListByUser);
+router.post('/list/accepted', friend_find_controller.listAcceptedByUser);
+
 
 module.exports = router;

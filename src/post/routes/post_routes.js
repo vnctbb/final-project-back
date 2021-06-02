@@ -13,17 +13,17 @@ const post_delete_controller = require('../controller/post_delete_controller.js'
 
 router.post('/create', post_create_controller.createPost);
 
-router.post('/find', authentication.verifyJwtToken, post_find_controller.findOneById);
+router.post('/find', post_find_controller.findOne);
 
-router.post('/find/list', authentication.verifyJwtToken, post_find_controller.findList);
+router.post('/list', post_find_controller.list);
 
-router.post('/find/list/author', authentication.verifyJwtToken, post_find_controller.findListByAuthorId);
+router.post('/list/author', post_find_controller.listByAuthorId);
 
 router.post('/update', post_update_controller.updatePost);
 
-router.post('/delete', authentication.verifyJwtToken, post_delete_controller.deletePost);
+router.post('/delete', post_delete_controller.deletePost);
 
-router.post('/delete/admin', authentication.verifyJwtToken, security_level.get, post_delete_controller.deletePostAdmin);
+router.post('/delete/admin', post_delete_controller.deletePostAdmin);
 
 // TODO : add like and unlike routes
 

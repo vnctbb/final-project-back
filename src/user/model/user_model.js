@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const validator = require('../validator/user_email_validator')
 
 var userSchema = new mongoose.Schema({
-    email_address : {
+    emailAddress : {
         type : String,
         required: 'Email parameters required',
         maxlength : [100,'email_address maximum length is 100 character'],
@@ -20,13 +20,13 @@ var userSchema = new mongoose.Schema({
         minlength : [8,'Password must be at least 8 character long'],
         default: null
     },
-    first_name: {
+    firstName: {
         type : String,
         required: 'Firstname parameters required',
         maxlength : [50,'first_name maximum length is 50 character'],
         default: null
     },
-    last_name: {
+    lastName: {
         type : String,
         required: 'Lastname parameters required',
         maxlength : [50,'last_name maximum length is 50 character'],
@@ -42,7 +42,7 @@ var userSchema = new mongoose.Schema({
         maxlength : [3,'genre maximum length is 3 character'],
         default: null
     },
-    phone_number: {
+    phoneNumber: {
         type : String,
         maxlength : [20,'genre maximum length is 20 character'],
         default: null
@@ -62,11 +62,11 @@ var userSchema = new mongoose.Schema({
         type : String,
         default: null
     },
-    profil_picture: {
+    profilPicture: {
         type : String,
         default: null
     },
-    security_level: {
+    securityLevel: {
         type : Number,
         required: 'Missing security level parameters'
     },
@@ -74,7 +74,7 @@ var userSchema = new mongoose.Schema({
     saltSecret: String
 });
 
-userSchema.path('email_address').validate((val) => {return validator.emailValidator(val)}, 'Invalid email params');
+userSchema.path('emailAddress').validate((val) => {return validator.emailValidator(val)}, 'Invalid email params');
 
 userSchema.pre('save', function (next) {
     bcrypt.genSalt(10, (err, salt) => {

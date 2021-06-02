@@ -15,7 +15,7 @@ const user_delete_controller = require('../controller/user_delete_controller.js'
 
 router.post('/create', user_create_controller.createUser);
 
-router.post('/create/admin', authentication.verifyJwtToken, security_level.get, user_create_controller.createUserAdmin);
+router.post('/create/admin', authentication.verifyJwtToken, security_level.get, user_create_controller.createAdmin);
 
 router.post('/authenticate', user_authenticate_controller.authenticate);
 
@@ -31,8 +31,8 @@ router.get('/profile', authentication.verifyJwtToken, user_profile_controller.us
 
 router.post('/update', user_update_controller.updateProfile);
 
-router.get('/delete', authentication.verifyJwtToken, user_delete_controller.deleteUser);
+router.get('/delete', user_delete_controller.deleteUser);
 
-router.post('/delete/admin', authentication.verifyJwtToken, security_level.get, user_delete_controller.deleteUserAdmin);
+router.post('/delete/admin', user_delete_controller.deleteUserAdmin);
 
 module.exports = router;

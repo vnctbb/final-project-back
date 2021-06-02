@@ -8,10 +8,10 @@ exports.createPost = (req, res, next) => {
     const post = new Post(req.body.params);
 
     //
-    req._id = "60a7729837b47452b8c5483e"
+    req._id = "60ae71dbd5143b9e0bf3e9b6"
 
-    post.author_id = req._id;
-    post.modification_datetime = post.creation_datetime;
+    post.authorId = req._id;
+    post.modificationDatetime = post.creationDatetime;
 
     post.save((err, doc) => {
         if(!err){

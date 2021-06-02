@@ -15,11 +15,11 @@ const topic_delete_controller = require('../controller/topic_delete_controller')
 
 router.post('/create', topic_create_controller.createTopic);
 
-router.post('/find', topic_find_controller.findTopic);
+router.post('/find', topic_find_controller.findOne);
 
-router.post('/find/list', topic_find_controller.findList);
+router.post('/find/list', topic_find_controller.list);
 
-router.post('/find/list/owner', topic_find_controller.findListByOwnerId);
+router.post('/find/list/owner', topic_find_controller.listByOwnerId);
 
 router.post('/update', topic_update_controller.updateTopic);
 

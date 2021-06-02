@@ -1,0 +1,95 @@
+----- post :
+
+create OK
+
+find OK
+
+list OK
+
+list.author OK
+
+update OK
+
+delete OK
+
+delete.admin seems OK
+
+----- postcom :
+
+create OK 
+
+find OK
+
+list.post OK
+
+list.author OK
+
+update OK
+
+delete OK
+
+delete.admin OK
+
+----- like :
+
+create OK
+
+find OK
+
+list OK
+
+delete OK
+
+----- friend :
+
+create OK
+
+update OK
+
+existe OK
+
+findOne OK
+
+findIn OK
+
+findOut OK
+
+findAccepted OK
+
+----- topic :
+
+create OK
+
+find OK
+
+findList OK
+
+findListOwner OK
+
+update OK
+
+delete OK
+
+deleteAdmin OK
+
+----- topicmessage :
+
+create OK
+
+find OK
+
+listTopic OK
+
+listAuthor OK
+
+update OK
+
+delete OK
+
+deleteAdmin OK
+
+----- user :
+
+REQUEST OK
+
+reste juste à terminer delete, car ne supprimer pas les postCom et Like des post, ni les topicMessage des topics (voir si couche repo ou alors à la rache et tout à la suite)

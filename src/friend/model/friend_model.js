@@ -3,17 +3,17 @@
 const mongoose = require('mongoose');
 
 var friendSchema = new mongoose.Schema({
-    sender_id : {
+    senderId : {
         type : String,
         required: 'User1 id parameters required',
         default: null
     },
-    receiver_id : {
+    receiverId : {
         type : String,
         required: 'Receiver id parameters required',
         default: null
     },
-    creation_datetime : {
+    creationDatetime : {
         type : String,
         required: 'Creation datetime empty',
         default: null

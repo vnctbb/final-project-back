@@ -3,24 +3,24 @@
 exports.updateValidator = (params) => {
     const validUpdate = {};
 
-    if(params._id || params.security_level || params.saltSecret || params.__v){
+    if(params._id || params.securityLevel || params.saltSecret || params.__v){
         return validUpdate;
     }
 
-    if(params.email_address){
-        validUpdate.email_address = params.email_address;
+    if(params.emailAddress){
+        validUpdate.emailAddress = params.emailAddress;
     }
 
     if(params.password){
         validUpdate.password = params.password;
     }
 
-    if(params.first_name){
-        validUpdate.first_name = params.first_name;
+    if(params.firstName){
+        validUpdate.firstName = params.firstName;
     }
 
-    if(params.last_name){
-        validUpdate.last_name = params.last_name;
+    if(params.lastName){
+        validUpdate.lastName = params.lastName;
     }
 
     if(params.genre){
@@ -31,8 +31,8 @@ exports.updateValidator = (params) => {
         validUpdate.age = params.age;
     }
 
-    if(params.phone_number){
-        validUpdate.phone_number = params.phone_number;
+    if(params.phoneNumber){
+        validUpdate.phoneNumber = params.phoneNumber;
     }
 
     if(params.country){
@@ -47,8 +47,8 @@ exports.updateValidator = (params) => {
         validUpdate.favorites = params.favorites;
     }
 
-    if(params.profil_picture){
-        validUpdate.profil_picture = params.profil_picture;
+    if(params.profilPicture){
+        validUpdate.profilPicture = params.profilPicture;
     }
     
     return validUpdate;

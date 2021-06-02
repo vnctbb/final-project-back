@@ -2,21 +2,29 @@
 
 const mongoose = require('mongoose')
 
+const Topic = mongoose.model('Topic')
 const TopicMessage = mongoose.model('TopicMessage')
 
-exports.createTopicMessage = (req, res, next) => {
+exports.createTopicMessage =  async(req, res, next) => {
     const topicmessage = new TopicMessage(req.body.params);
     
-    req._id = "60a7729837b47452b8c5483e"
+    req._id = "60abecf5cfe7e23919d56e2f"
 
-    topicmessage.author_id = req._id;
-    topicmessage.modification_datetime = topicmessage.creation_datetime;
+    topicmessage.authorId = req._id;
+    topicmessage.modification_datetime = topicmessage.creationDatetime;
 
-    topicmessage.save((err, doc) => {
-        if(!err){
-            res.status(200).json({status : true, message : 'TopicMessage created', id : doc._id})
-        } else {
-            return next(err)
-        }
-    })
+    let topic = Topic.findOne({_id : topicmessage.topicId});
+    if (!topic){
+        
+        res.status(400).json({status : false, message : 'Error : Topic not found'})
+    }
+
+    let doc = await topicmessage.save();
+    if (!doc){
+
+        res.status(400).json({status : false, message : 'Error : TopicMessage not created'})
+    }
+
+    res.status(200).json({status : true, message : 'TopicMessage created', id : doc._id})
+
 }

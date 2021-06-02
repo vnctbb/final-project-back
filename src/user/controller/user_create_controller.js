@@ -1,58 +1,73 @@
 'use strict'
 
+const { upperFirst } = require('lodash');
 const mongoose = require('mongoose')
 
 const User = mongoose.model('User')
 
 const user_constant = require('../constant/user_constant');
-const user_create_repository = require('../repository/create');
 
-
-exports.createUser = (req, res, next) => {
+exports.createUser = async (req, res, next) => {
     const user = new User(req.body.params);
 
-    user.email_address = req.body.params.email_address
+    user.emailAddress = req.body.params.emailAddress
 
-    user.security_level = user_constant.USER_SECURITY_LEVEL;
+    user.securityLevel = user_constant.USER_SECURITY_LEVEL;
 
-    user_create_repository.create(user, (err) => {
-        if(!err){
-            res.status(200).json({status : true, message : 'User created', id : user._id})
+    let doc
+    try {
+        doc = await user.save();
+    } catch (err) {
+        if(err.code === 11000){
+
+            return res.status(422).json({status : false, message : err.message})
         } else {
-            if(err.code === 11000){
-                console.log(err)
-                res.status(422).json({status : false, message : 'Provided email already used'})
-            } else {
-                return next(err)
-            }
+
+            return res.status(400).json({status : false, message : err.message})
         }
-    })
+    }
+
+    if (doc){
+
+        return res.status(200).json({status : true, message : 'User created', id : doc._id});
+    } else {
+
+        return res.status(400).json({status : false, message : 'Error : User not created'})
+    }
 
 };
 
 
-exports.createUserAdmin = (req, res, next) => {
+exports.createAdmin = async (req, res, next) => {
 
     const user = new User(req.body.params);
 
-    user.email_address = req.body.params.email_address
+    user.emailAddress = req.body.params.emailAddress
 
-    if(req.body.params.security_level){
-        user.security_level = req.body.params.security_level;
+    if(req.body.params.securityLevel){
+        user.securityLevel = req.body.params.securityLevel;
     }
-    user.security_level = user_constant.ADMIN_SECURITY_LEVEL;
+    user.securityLevel = user_constant.ADMIN_SECURITY_LEVEL;
 
-    user_create_repository.create(user, (err) => {
-        if(!err){
-            res.status(200).json({status : true, message : 'User created'})
+    let doc
+    try {
+        doc = await user.save();
+    } catch (err) {
+        if(err.code === 11000){
+
+            return res.status(422).json({status : false, message : 'Provided email already used'})
         } else {
-            if(err.code === 11000){
-                console.log(err)
-                res.status(422).json({status : false, message : 'Provided email already used'})
-            } else {
-                return next(err)
-            }
+
+            return res.status(400).json({status : true, message : 'Error : User not created'})
         }
-    })
+    }
+
+    if (doc){
+
+        return res.status(200).json({status : true, message : 'User created', id : doc._id});
+    } else {
+
+        return res.status(400).json({status : true, message : 'Error : User not created'})
+    }
 
 };

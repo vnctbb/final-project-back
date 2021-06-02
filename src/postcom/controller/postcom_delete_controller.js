@@ -3,56 +3,50 @@
 const mongoose = require('mongoose');
 const PostCom = mongoose.model('PostCom')
 
-exports.deletePostCom = (req, res, next) => {
+exports.deletePostCom = async (req, res, next) => {
 
-    if(!req.body.postcom_id){
+    if(!req.body.postcomId){
         return res.status(404).json({status : false, message : 'Invalid parameters.'});
     }
 
-    req._id = "60a7729837b47452b8c5483e"
+    req._id = "60ae71dbd5143b9e0bf3e9b6"
 
-    PostCom.findOne({_id : req.body.postcom_id, author_id : req._id}, (err, postcom) => {
-        if(postcom){
-            PostCom.deleteOne({_id : req.body.postcom_id}, (err) => {
-                if(!err){
-                    res.status(200).json({status : true, message : 'PostCom deleted'})
-                } else {
-                    return next(err);
-                }
-            })
-        } else {
-            if(err){
-                return next(err)
-            } else {
-                return res.status(404).json({status : false, message : 'PostCom not found.'});
-            }
-        }
-    })
+    let postCom = PostCom.findOne({_id : req.body.postcomId, authorId : req._id});
+    if (!postCom){
+
+        return res.status(404).json({status : false, message : 'PostCom not found.'});
+    }
+
+    let postComDelete = PostCom.deleteOne({_id : req.body.postcomId});
+    if(postComDelete.deletedCount == 0) {
+
+        return res.status(404).json({status : false, message : 'Error deleting postCom'});
+    } 
+        
+    res.status(200).json({status : true, message : 'PostCom deleted'})
 
 };
 
 exports.deletePostComAdmin = (req, res, next) => {
 
-    if(!req.body.postcom_id){
+    if(!req.body.postcomId){
         return res.status(404).json({status : false, message : 'Invalid parameters.'});
     }
 
-    PostCom.findOne({_id : req.body.postcom_id}, (err, user) => {
-        if(user){
-            PostCom.deleteOne({_id : req.body.postcom_id}, (err) => {
-                if(!err){
-                    res.status(200).json({status : true, message : 'PostCom deleted'})
-                } else {
-                    return next(err);
-                }
-            })
-        } else {
-            if(err){
-                return next(err)
-            } else {
-                return res.status(404).json({status : false, message : 'PostCom not found.'});
-            }
-        }
-    })
+    req._id = "60ae71dbd5143b9e0bf3e9b6"
+
+    let postCom = PostCom.findOne({_id : req.body.postcomId});
+    if (!postCom){
+
+        return res.status(404).json({status : false, message : 'PostCom not found.'});
+    }
+
+    let postComDelete = PostCom.deleteOne({_id : req.body.postcomId});
+    if(postComDelete.deletedCount == 0) {
+
+        return res.status(404).json({status : false, message : 'Error deleting postCom'});
+    } 
+        
+    res.status(200).json({status : true, message : 'PostCom deleted'})
 
 };

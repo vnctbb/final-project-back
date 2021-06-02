@@ -3,7 +3,7 @@
 exports.updateValidator = (params) => {
     const validParams = {};
 
-    if(params._id || params.__v || params.topic_id || params.author_id || params.creation_datetime){
+    if(params._id || params.__v || params.topicId || params.authorId || params.creationDatetime){
         return undefined;
     }
 
@@ -13,8 +13,8 @@ exports.updateValidator = (params) => {
         return undefined
     }
 
-    if (params.modification_datetime){
-        validParams.modification_datetime = params.modification_datetime;
+    if (params.modificationDatetime){
+        validParams.modificationDatetime = params.modificationDatetime;
     } else {
         return undefined
     }

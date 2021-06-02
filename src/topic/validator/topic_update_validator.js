@@ -3,24 +3,24 @@
 exports.updateValidator = (params) => {
     const validParams = {};
 
-    if(params._id || params.__v || params.owner_id || params.creation_datetime){
+    if(params._id || params.__v || params.ownerId || params.creationDatetime){
         return undefined;
     }
 
-    if (params.topic_name){
-        validParams.topic_name = params.topic_name;
+    if (params.topicName){
+        validParams.topicName = params.topicName;
     }
 
-    if (params.topic_description){
-        validParams.topic_description = params.topic_description;
+    if (params.topicDescription){
+        validParams.topicDescription = params.topicDescription;
     }
 
-    if(!params.topic_name && !params.topic_description){
+    if(!params.topicName && !params.topicDescription){
         return undefined
     }
 
-    if (params.modification_datetime){
-        validParams.modification_datetime = params.modification_datetime;
+    if (params.modificationDatetime){
+        validParams.modificationDatetime = params.modificationDatetime;
     } else {
         return undefined
     }

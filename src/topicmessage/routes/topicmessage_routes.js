@@ -17,9 +17,9 @@ router.post('/create', topicmessage_create_controller.createTopicMessage);
 
 router.post('/find', topicmessage_find_controller.findTopicMessage)
 
-router.post('/list/topic', topicmessage_find_controller.findListByTopicId)
+router.post('/list/topic', topicmessage_find_controller.listByTopicId)
 
-router.post('/list/author', topicmessage_find_controller.findListByAuthorId)
+router.post('/list/author', topicmessage_find_controller.listByAuthorId)
 
 router.post('/update', topicmessage_update_controller.updateTopicMessage);
 

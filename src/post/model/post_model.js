@@ -3,17 +3,17 @@
 const mongoose = require('mongoose');
 
 var postSchema = new mongoose.Schema({
-    author_id : {
+    authorId : {
         type : String,
         required: 'Author ID parameters required',
         default: null
     },
-    creation_datetime : {
+    creationDatetime : {
         type : String,
         required: 'Creation datetime parameters required',
         default: null
     },
-    modification_datetime : {
+    modificationDatetime : {
         type : String,
         default: null
     },

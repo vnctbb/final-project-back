@@ -2,19 +2,23 @@ TODO :
 
 TEST user, post, postcom, like, friend, topic, topicmessage
 
-aggreger des données pour certaine requête (post + com + like?)
+Next gros TODO :
+
++ revoir penser à vérifier les paramètres des requêtes (au fur et à mesure)
+
+rajouter catch? + revoir la gestion des erreurs
+
+
+supprimer user implique d'autre suppression => pareil pour les autres entités (genre post/postcom/like)
+ - revoir la suppresion des user, ne supprime pas bien les post et les topics faire un beau truc
 
 USER :
-
-Supprimer user implique d'autre suppression => pareil pour les autres entités (genre post/postcom/like)
 
 FRIEND :
 
 POST :
 
 LIKE :
-
-table & routes
 
 CHAT :
 
@@ -23,6 +27,26 @@ réfléchir à la structure (entité conversation + messageconversation ??)
 Notification :
 
 table & routes
+
+
+
+
+
+WEB-APP
+
+=> revoir auth et deconnexion
+
+=> portail de login / création
+
+=> landing-page
+
+=> profile
+
+=> search
+
+=> topic
+
+=> landing admin
 
 
 
@@ -52,6 +76,11 @@ update rajouter erreur si not found comme dans topic.update;
 like table & routes;
 
 update rajouter une condition pour les champs que je ne veux pas modifier;
+
+aggreger des données pour certaine requête (post + com + like?) -- done (si j'ai le temps le faire pour d'autre entités)
+
+modifier tous les champs, enlever les underscore (un petit peu tous les matins)
+
 
 
 

@@ -5,29 +5,25 @@ const User = mongoose.model('User');
 const Topic = mongoose.model('Topic');
 const TopicMessage = mongoose.model('TopicMessage');
 
-const option_validator = require('../validator/list_params_validator');
+const option_validator = require('../../validator/list_option_validator');
 
-exports.findTopicMessage = (req, res, next) => {
+exports.findTopicMessage = async (req, res, next) => {
 
-    if(!req.body.topicmessage_id){
+    if(!req.body.topicmessageId){
         return res.status(400).json({status : false, message : "Error : Invalid parameters"});
     }
 
-    TopicMessage.findOne({_id : req.body.topicmessage_id}, {__v : 0}, (err, topicmessage) => {
-        if(topicmessage){
-            if(!err){
-                return res.status(200).json({status : true, topicmessage : topicmessage});
-            } else {
-                return next(err);
-            }
-        } else {
-            return res.status(400).json({status : false, message : "Error : Topic not found"});
-        }
-    });
+    let topicmessage = await TopicMessage.findOne({_id : req.body.topicmessageId}, {__v : 0});
+    if(!topicmessage){
+
+        return res.status(400).json({status : false, message : "Error : TopicMessage not found"});
+    }
+
+    return res.status(200).json({status : true, topicmessage : topicmessage});
 
 };
 
-exports.findListByTopicId = (req, res, next) => {
+exports.listByTopicId = async (req, res, next) => {
 
     let optionV = {};
 
@@ -35,26 +31,28 @@ exports.findListByTopicId = (req, res, next) => {
         optionV = option_validator.optionValidator(req.body.params);
     }
 
-    if(req.body.topic_id){
-        Topic.findOne({_id : req.body.topic_id}, {__v : 0}, optionV, (err, user) => {
-            if(user){
-                TopicMessage.find({topic_id : req.body.topic_id}, {__v : 0, topic_id : 0}, (err, messages) => {
-                    if(messages.len == 0){
-                        return res.status(400).json({status : false, message : "Error : Topics not found"});
-                    } else {
-                        return res.status(200).json({status : true, topicmessage : messages, topic_id : req.body.topic_id});
-                    }
-                });
-            } else {
-                return res.status(400).json({status : false, message : "Error : Owner not found"});
-            }
-        });
-    } else {
+    if(!req.body.params.topicId){
+
         return res.status(400).json({status : false, message : "Error : Invalid parameters"});
     }
+
+    let topic = await Topic.findOne({_id : req.body.params.topicId}, {__v : 0});
+    if (!topic){
+        
+        return res.status(400).json({status : false, message : "Error : Topic not found"});
+    }
+
+    let messages = await TopicMessage.find({topicId : req.body.params.topicId}, {__v : 0, topicId : 0}, optionV);
+    if (messages.length == 0){
+        
+        return res.status(400).json({status : false, message : "Error : TopicMessages not found"});
+    }
+
+    return res.status(200).json({status : true, topicmessage : messages, topicId : req.body.params.topicId});
+
 };
 
-exports.findListByAuthorId = (req, res, next) => {
+exports.listByAuthorId = async (req, res, next) => {
 
     let optionV = {};
 
@@ -62,22 +60,24 @@ exports.findListByAuthorId = (req, res, next) => {
         optionV = option_validator.optionValidator(req.body.params);
     }
 
-    if(req.body.author_id){
-        User.findOne({_id : req.body.author_id}, {__v : 0}, optionV, (err, user) => {
-            if(user){
-                TopicMessage.find({author_id : req.body.author_id}, {__v : 0, author_id : 0}, (err, messages) => {
-                    if(messages.len == 0){
-                        return res.status(400).json({status : false, message : "Error : Topics not found"});
-                    } else {
-                        return res.status(200).json({status : true, topicmessage : messages, author_id : req.body.author_id});
-                    }
-                });
-            } else {
-                return res.status(400).json({status : false, message : "Error : Owner not found"});
-            }
-        });
-    } else {
+    if(!req.body.params.author_id){
+
         return res.status(400).json({status : false, message : "Error : Invalid parameters"});
     }
+
+    let user = await User.findOne({_id : req.body.params.authorId}, {__v : 0});
+    if (!user){
+
+        return res.status(400).json({status : false, message : "Error : Author not found"});
+    }
+
+    let messages = await TopicMessage.find({authorId : req.body.params.authorId}, {__v : 0, authorId : 0}, optionV);
+    if (messages.length == 0){
+
+        return res.status(400).json({status : false, message : "Error : Topics not found"});
+    }
+
+    return res.status(200).json({status : true, topicmessage : messages, authorId : req.body.params.authorId});
+
 };
 
