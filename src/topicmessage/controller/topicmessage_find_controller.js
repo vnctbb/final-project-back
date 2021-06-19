@@ -37,7 +37,7 @@ exports.listByTopicId = async (req, res, next) => {
 
     let optionV = {};
 
-    if(req.body){
+    if(req.body.params){
         optionV = option_validator.optionValidator(req.body.params);
     }
 
@@ -60,6 +60,8 @@ exports.listByTopicId = async (req, res, next) => {
         
         return res.status(200).json({status : true, topicmessage : [], topicId : req.body.topicId});
     }
+
+    console.log(messages)
 
     return res.status(200).json({status : true, topicmessage : messages, topicId : req.body.topicId});
 
