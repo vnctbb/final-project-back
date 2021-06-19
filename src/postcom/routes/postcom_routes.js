@@ -25,6 +25,8 @@ router.post('/delete',  authentication.verifyJwtToken,postcom_delete_controller.
 
 router.post('/author/delete',  authentication.verifyJwtToken,postcom_delete_controller.authorDeletePostCom);
 
-router.post('/delete/admin', postcom_delete_controller.deletePostComAdmin);
+router.post('/list/author/admin', authentication.verifyJwtToken, security_level.get, postcom_find_controller.adminList);
+
+router.post('/delete/admin', authentication.verifyJwtToken, security_level.get, postcom_delete_controller.deletePostComAdmin);
 
 module.exports = router;

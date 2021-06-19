@@ -23,6 +23,8 @@ router.post('/update', authentication.verifyJwtToken, post_update_controller.upd
 
 router.post('/delete', authentication.verifyJwtToken, post_delete_controller.deletePost);
 
+router.post('/list/admin', authentication.verifyJwtToken, security_level.get, post_find_controller.listAdmin);
+
 router.post('/delete/admin', authentication.verifyJwtToken, security_level.get, post_delete_controller.deletePostAdmin);
 
 // TODO : add like and unlike routes

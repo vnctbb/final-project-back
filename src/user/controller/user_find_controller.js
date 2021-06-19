@@ -84,11 +84,15 @@ exports.findList = (req, res, next) => {
 
     let optionV = {};
 
+    console.log(req.body)
+
     if(req.body.params){
         optionV = option_validator.optionValidator(req.body.params);
     }
 
-    User.find({}, {password : 0, saltSecret : 0, __v : 0, securityLevels : 0}, optionV, (err, users) => {
+    console.log(optionV)
+
+    User.find({ securityLevel: { $ne: 10 } } , {password : 0, saltSecret : 0, __v : 0, securityLevels : 0}, optionV, (err, users) => {
         if(users.length == 0){
             return res.status(400).json({status : false, message : "Error : User not found"});
         } else {

@@ -14,6 +14,8 @@ exports.createUser = async (req, res, next) => {
 
     user.securityLevel = user_constant.USER_SECURITY_LEVEL;
 
+    user.creationDatetime = Date.now();
+
     console.log(user.emailAddress)
 
     let doc

@@ -244,3 +244,15 @@ async function checkLiked (postId, userId) {
     return {liked : true, err : undefined};
 }
 
+exports.listAdmin = async (req, res, next) => {
+    let optionV;
+
+    if(req.body.params){
+
+        optionV = option_validator.optionValidator(req.body.params);
+    }
+
+    let posts = await Post.find({}, {__v : 0}, optionV)
+
+    return res.status(200).json({status : false, posts : posts});
+}

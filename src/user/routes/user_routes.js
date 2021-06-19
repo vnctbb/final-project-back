@@ -19,13 +19,15 @@ router.post('/create/admin', authentication.verifyJwtToken, security_level.get, 
 
 router.post('/authenticate', user_authenticate_controller.authenticate);
 
+router.post('/authenticate/admin', user_authenticate_controller.authenticateAdmin);
+
+router.get('/check/admin', authentication.verifyJwtToken, user_authenticate_controller.isAdmin);
+
 router.post('/find', authentication.verifyJwtToken, user_find_controller.findOneById);
 
 router.post('/find/min', authentication.verifyJwtToken, user_find_controller.findOneMinById);
 
-router.post('/find/list', authentication.verifyJwtToken, user_find_controller.findList);
-
-router.post('/search', user_find_controller.search);
+router.post('/search', authentication.verifyJwtToken,user_find_controller.search);
 
 router.get('/profile', authentication.verifyJwtToken, user_profile_controller.userProfile);
 
@@ -34,6 +36,8 @@ router.post('/profile/picture', authentication.verifyJwtToken, user_profile_cont
 router.post('/update', authentication.verifyJwtToken, user_update_controller.updateProfile);
 
 router.get('/delete', authentication.verifyJwtToken, user_delete_controller.deleteUser);
+
+router.post('/find/list', authentication.verifyJwtToken, security_level.get, user_find_controller.findList);
 
 router.post('/delete/admin', authentication.verifyJwtToken, security_level.get, user_delete_controller.deleteUserAdmin);
 

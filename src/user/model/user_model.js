@@ -32,6 +32,11 @@ var userSchema = new mongoose.Schema({
         maxlength : [50,'last_name maximum length is 50 character'],
         default: null
     },
+    creationDatetime: {
+        type : Number,
+        required: 'CreationDatetime parameters required',
+        default: null
+    },
     genre: {
         type : String,
         maxlength : [6,'genre maximum length is 6 character'],

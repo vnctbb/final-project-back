@@ -135,3 +135,31 @@ exports.listByAuthorID = async (req, res, next) => {
     return res.status(200).json({status : true, postcoms : postComs, authorId : req.body.params.authorId});
 };
 
+exports.adminList = async (req, res, next) => {
+
+    let optionV = {};
+
+    if(req.body.params){
+        optionV = option_validator.optionValidator(req.body.params);
+    }
+    
+    if(!req.body.params.postId){
+        return res.status(400).json({status : false, message : "Error : Invalid parameters"});
+    }
+
+    let postComs;
+    try {
+        postComs = await PostCom.find({postId : req.body.params.postId}, {__v : 0, postId : 0}, optionV);
+    } catch (err) {
+
+        return res.status(400).json({status : false, error : err});
+    }
+    if (postComs.length == 0){
+
+        return res.status(200).json({status : false, postcoms : []});
+    }
+
+    return res.status(200).json({status : true, postcoms : postComs});
+
+}
+
