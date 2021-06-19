@@ -10,8 +10,6 @@ exports.deleteTopic = async (req, res, next) => {
         return res.status(404).json({status : false, message : 'Invalid parameters.'});
     }
 
-    req._id = "60a7729837b47452b8c5483e"
-
     let topic = await Topic.findOne({_id : req.body.topicId, ownerId : req._id});
     if (!topic){
 
@@ -42,8 +40,6 @@ exports.deleteTopicAdmin = async (req, res, next) => {
     if(!req.body.topicId){
         return res.status(404).json({status : false, message : 'Invalid parameters.'});
     }
-
-    req._id = "60a7729837b47452b8c5483e"
 
     let topic = await Topic.findOne({_id : req.body.topicId});
     if (!topic){

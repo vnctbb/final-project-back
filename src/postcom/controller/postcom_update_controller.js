@@ -19,8 +19,6 @@ exports.updatePostCom = async (req, res, next) => {
         return res.status(400).json({status : false, message : 'Invalid parameters'});
     }
 
-    req._id = "60ae71dbd5143b9e0bf3e9b6"
-
     if (!req.body._id){
         return res.status(400).json({status : false, message : 'Invalid parameters'});
     }

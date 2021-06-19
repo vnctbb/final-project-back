@@ -7,8 +7,6 @@ const Like = mongoose.model('Like');
 
 exports.deletePost = async (req, res, next) => {
 
-    req._id = "60ae71dbd5143b9e0bf3e9b6"
-
     let post = await Post.findOne({_id : req.body.postId, authorId : req._id});
     if (!post) return res.status(404).json({status : false, message : 'Post not found.'});
 

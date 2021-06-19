@@ -3,15 +3,21 @@
 const mongoose = require('mongoose');
 
 const Post = mongoose.model('Post');
+const User = mongoose.model('User');
 
-exports.createPost = (req, res, next) => {
+exports.createPost = async (req, res, next) => {
     const post = new Post(req.body.params);
-
-    //
-    req._id = "60ae71dbd5143b9e0bf3e9b6"
 
     post.authorId = req._id;
     post.modificationDatetime = post.creationDatetime;
+
+    let user = await User.findOne({_id : req._id});
+    if (!user){
+
+        return res.status(400).json({status : false, message : "Error : Author not found"});
+    }
+
+    post.authorName = user.firstName + " " + user.lastName;
 
     post.save((err, doc) => {
         if(!err){

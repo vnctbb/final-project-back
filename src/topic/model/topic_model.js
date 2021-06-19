@@ -8,6 +8,11 @@ var topicSchema = new mongoose.Schema({
         required: 'Owner ID parameters required',
         default: null
     },
+    ownerName:{
+        type : String,
+        required: 'Owner name parameters required',
+        default: null
+    },
     creationDatetime : {
         type : String,
         required: 'Creation datetime parameters required',

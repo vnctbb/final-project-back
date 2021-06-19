@@ -19,20 +19,22 @@ router.post('/create/admin', authentication.verifyJwtToken, security_level.get, 
 
 router.post('/authenticate', user_authenticate_controller.authenticate);
 
-router.post('/find', user_find_controller.findOneById);
+router.post('/find', authentication.verifyJwtToken, user_find_controller.findOneById);
 
-router.post('/find/min', user_find_controller.findOneMinById);
+router.post('/find/min', authentication.verifyJwtToken, user_find_controller.findOneMinById);
 
-router.post('/find/list', user_find_controller.findList);
+router.post('/find/list', authentication.verifyJwtToken, user_find_controller.findList);
 
-router.post('/find/list/min', user_find_controller.findListMin);
+router.post('/search', user_find_controller.search);
 
 router.get('/profile', authentication.verifyJwtToken, user_profile_controller.userProfile);
 
-router.post('/update', user_update_controller.updateProfile);
+router.post('/profile/picture', authentication.verifyJwtToken, user_profile_controller.profilePicture);
 
-router.get('/delete', user_delete_controller.deleteUser);
+router.post('/update', authentication.verifyJwtToken, user_update_controller.updateProfile);
 
-router.post('/delete/admin', user_delete_controller.deleteUserAdmin);
+router.get('/delete', authentication.verifyJwtToken, user_delete_controller.deleteUser);
+
+router.post('/delete/admin', authentication.verifyJwtToken, security_level.get, user_delete_controller.deleteUserAdmin);
 
 module.exports = router;

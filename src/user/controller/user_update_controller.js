@@ -9,8 +9,8 @@ exports.updateProfile = (req, res, next) => {
 
     let validParams;
 
-    if(req.body.params){
-        validParams = update_validator.updateValidator(req.body.params);
+    if(req.body){
+        validParams = update_validator.updateValidator(req.body);
     } else {
         return res.status(400).json({status : false, message : 'Invalid parameters'});
     }
@@ -19,7 +19,11 @@ exports.updateProfile = (req, res, next) => {
         return res.status(400).json({status : false, message : 'Invalid parameters'});
     }
 
-    User.findOneAndUpdate({_id : req.body._id}, { $set: req.body.params }, {password : 0, saltSecret : 0, __v : 0}, (err, user) => {
+    console.log(req.body._id);
+
+    console.log(validParams);
+
+    User.findOneAndUpdate({_id : req.body._id}, { $set: validParams }, {password : 0, saltSecret : 0, __v : 0}, (err, user) => {
         if (!err) {
             if(user){
                 res.status(200).json({status : true, message : 'User updated', id : user._id})

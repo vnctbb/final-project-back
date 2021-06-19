@@ -13,18 +13,20 @@ const topic_delete_controller = require('../controller/topic_delete_controller')
 
 // findOne, ListAll, listByOwnerId, create, update, delete, delete ADMIN
 
-router.post('/create', topic_create_controller.createTopic);
+router.post('/create', authentication.verifyJwtToken, topic_create_controller.createTopic);
 
-router.post('/find', topic_find_controller.findOne);
+router.get('/count', authentication.verifyJwtToken, topic_find_controller.count);
 
-router.post('/find/list', topic_find_controller.list);
+router.post('/find', authentication.verifyJwtToken, topic_find_controller.findOne);
 
-router.post('/find/list/owner', topic_find_controller.listByOwnerId);
+router.post('/find/list', authentication.verifyJwtToken, topic_find_controller.list);
 
-router.post('/update', topic_update_controller.updateTopic);
+router.post('/find/list/owner', authentication.verifyJwtToken, topic_find_controller.listByOwnerId);
 
-router.post('/delete', topic_delete_controller.deleteTopic);
+router.post('/update', authentication.verifyJwtToken, topic_update_controller.updateTopic);
 
-router.post('/delete/admin', topic_delete_controller.deleteTopicAdmin);
+router.post('/delete', authentication.verifyJwtToken, topic_delete_controller.deleteTopic);
+
+router.post('/delete/admin', authentication.verifyJwtToken, security_level.get, topic_delete_controller.deleteTopicAdmin);
 
 module.exports = router;

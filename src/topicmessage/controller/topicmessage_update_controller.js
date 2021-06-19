@@ -5,7 +5,7 @@ const TopicMessage = mongoose.model('TopicMessage')
 
 const updateValidator = require('../validator/topicmessage_update_validator');
 
-exports.updateTopicMessage = (req, res, next) => {
+exports.updateTopicMessage = async (req, res, next) => {
 
     let validParams;
 
@@ -19,14 +19,12 @@ exports.updateTopicMessage = (req, res, next) => {
         return res.status(400).json({status : false, message : 'Invalid parameters'});
     }
 
-    req._id = "60a7729837b47452b8c5483e"
-
     if(!req.body._id){
 
         return res.status(400).json({status : false, message : 'Invalid parameters'});
     }
 
-    let topicmessage = TopicMessage.findOneAndUpdate({_id : req.body._id, authorId : req._id}, { $set: validParams }, {useFindAndModify : false});
+    let topicmessage = await TopicMessage.findOneAndUpdate({_id : req.body._id, authorId : req._id}, { $set: validParams }, {useFindAndModify : false});
     if (!topicmessage){
 
         return res.status(404).json({status : false, message : `Error : TopicMessage not found`});

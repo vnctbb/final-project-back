@@ -3,10 +3,6 @@
 exports.updateValidator = (params) => {
     const validUpdate = {};
 
-    if(params._id || params.securityLevel || params.saltSecret || params.__v){
-        return validUpdate;
-    }
-
     if(params.emailAddress){
         validUpdate.emailAddress = params.emailAddress;
     }
@@ -28,6 +24,9 @@ exports.updateValidator = (params) => {
     }
 
     if(params.age){
+        if(params.age > 99 || params.age < 0){
+            return {}
+        }
         validUpdate.age = params.age;
     }
 
@@ -50,6 +49,8 @@ exports.updateValidator = (params) => {
     if(params.profilPicture){
         validUpdate.profilPicture = params.profilPicture;
     }
+
+    console.log("FROM VALIDATOR : ", validUpdate)
     
     return validUpdate;
 }

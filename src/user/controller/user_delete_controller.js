@@ -48,9 +48,8 @@ exports.deleteUser = async (req, res, next) => {
     try {
         friendDelete = await Friend.deleteMany({$or: [{ receiverId: req._id }, { senderId: req_id }]});
     } catch (err) {
-        console.log(err);
         
-        return res.status(400).json({status : false, message : 'Error : Friend not delete'})
+        console.log(err);
     }
 
     return res.status(200).json({status : true, message : 'User deleted'})

@@ -13,18 +13,20 @@ const topicmessage_delete_controller = require('../controller/topicmessage_delet
 
 // findOne, ListByTopicId, (listByOwnerId), create, update, delete, delete ADMIN
 
-router.post('/create', topicmessage_create_controller.createTopicMessage);
+router.post('/create', authentication.verifyJwtToken, topicmessage_create_controller.createTopicMessage);
 
-router.post('/find', topicmessage_find_controller.findTopicMessage)
+router.post('/count', authentication.verifyJwtToken, topicmessage_find_controller.count);
 
-router.post('/list/topic', topicmessage_find_controller.listByTopicId)
+router.post('/find', authentication.verifyJwtToken, topicmessage_find_controller.findTopicMessage)
 
-router.post('/list/author', topicmessage_find_controller.listByAuthorId)
+router.post('/list/topic', authentication.verifyJwtToken, topicmessage_find_controller.listByTopicId)
 
-router.post('/update', topicmessage_update_controller.updateTopicMessage);
+router.post('/list/author', authentication.verifyJwtToken, topicmessage_find_controller.listByAuthorId)
 
-router.post('/delete', topicmessage_delete_controller.deleteTopicMessage);
+router.post('/update', authentication.verifyJwtToken, topicmessage_update_controller.updateTopicMessage);
 
-router.post('/delete/admin', topicmessage_delete_controller.deleteTopicMessageAdmin);
+router.post('/delete', authentication.verifyJwtToken, topicmessage_delete_controller.deleteTopicMessage);
+
+router.post('/delete/admin', authentication.verifyJwtToken, security_level.get, topicmessage_delete_controller.deleteTopicMessageAdmin);
 
 module.exports = router;

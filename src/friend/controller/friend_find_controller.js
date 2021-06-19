@@ -61,8 +61,6 @@ exports.listInByUser = async (req, res, next) => {
         optionV = option_validator.optionValidator(req.body.params);
     }
 
-    req._id = "60ab56af452a2d091bac1ab4"
-
     let friends;
     try {
         friends = await Friend.find({receiverId : req._id, status : 'WAITING'}, {__v : 0}, optionV);
@@ -83,8 +81,6 @@ exports.listOutByUser = async (req, res, next) => {
         optionV = option_validator.optionValidator(req.body.params);
     }
 
-    req._id = "60aa1871098a180559a335df"
-
     let friends;
     try {
 
@@ -101,23 +97,41 @@ exports.listOutByUser = async (req, res, next) => {
 exports.listAcceptedByUser = async (req, res, next) => {
 
     let optionV = {};
+    let userId;
 
     if(req.body.params){
         optionV = option_validator.optionValidator(req.body.params);
+
+        if(req.body.params.userId){
+            let friend = await Friend.findOne({senderId : req._id, receiverId : req.body.params.userId});
+    
+            if(!friend){
+                friend = await Friend.findOne({senderId : req.body.params.userId, receiverId : req._id});
+    
+                if(!friend){
+    
+                    return res.status(400).json({status : false, message : "Error : FriendShip not found"});
+                }
+            }
+    
+            userId = req.body.params.userId
+        }
     }
 
-    req._id = "60b68d88a9ff4a38f0fca08f"
+    if(!userId){
+        userId = req._id
+    }
+    
 
-    let friendsOut;
-    let friendsIn;
+    let friends;
     try {
 
-        friendsOut = await Friend.find({senderId : req._id, status : 'ACCEPTED'}, {__v : 0}, optionV);
+        friends = await Friend.find({$or: [{ senderId: userId }, { receiverId: userId }], status : 'ACCEPTED'}, {__v : 0, saltSecret : 0, password : 0}, optionV);
     } catch (err) {
 
         return res.status(400).json({status : false, error : err});
     }
-
+/*
     try {
 
         friendsIn = await Friend.find({receiverId : req._id, status : 'ACCEPTED'}, {__v : 0}, optionV);
@@ -126,8 +140,9 @@ exports.listAcceptedByUser = async (req, res, next) => {
         return res.status(400).json({status : false, error : err});
     }
 
-    
-    return res.status(200).json({status : true, friendsOut : friendsOut, friendsIn : friendsIn});
+    console.log(friendsOut, friendsIn)
+*/  
+    return res.status(200).json({status : true, friends : friends});
 
 };
 

@@ -7,6 +7,16 @@ const TopicMessage = mongoose.model('TopicMessage');
 
 const option_validator = require('../../validator/list_option_validator');
 
+exports.count = async (req, res, next) => {
+    let topicMessageLength = await TopicMessage.count({topicId : req.body.topicId});
+    if (!topicMessageLength){
+
+        return res.status(200).json({status : true, count : 0});
+    }
+
+    return res.status(200).json({status : true, count : topicMessageLength})
+}
+
 exports.findTopicMessage = async (req, res, next) => {
 
     if(!req.body.topicmessageId){
@@ -27,28 +37,31 @@ exports.listByTopicId = async (req, res, next) => {
 
     let optionV = {};
 
-    if(req.body.params){
+    if(req.body){
         optionV = option_validator.optionValidator(req.body.params);
     }
 
-    if(!req.body.params.topicId){
+    if(!req.body.topicId){
 
         return res.status(400).json({status : false, message : "Error : Invalid parameters"});
     }
 
-    let topic = await Topic.findOne({_id : req.body.params.topicId}, {__v : 0});
+    let topic = await Topic.findOne({_id : req.body.topicId}, {__v : 0});
     if (!topic){
         
         return res.status(400).json({status : false, message : "Error : Topic not found"});
+
     }
 
-    let messages = await TopicMessage.find({topicId : req.body.params.topicId}, {__v : 0, topicId : 0}, optionV);
+    console.log(optionV)
+
+    let messages = await TopicMessage.find({topicId : req.body.topicId}, {__v : 0, topicId : 0}, optionV);
     if (messages.length == 0){
         
-        return res.status(400).json({status : false, message : "Error : TopicMessages not found"});
+        return res.status(200).json({status : true, topicmessage : [], topicId : req.body.topicId});
     }
 
-    return res.status(200).json({status : true, topicmessage : messages, topicId : req.body.params.topicId});
+    return res.status(200).json({status : true, topicmessage : messages, topicId : req.body.topicId});
 
 };
 

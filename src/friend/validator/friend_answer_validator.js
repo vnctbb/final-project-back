@@ -1,6 +1,6 @@
 'use strict'
 
-exports.updateValidator = (params) => {
+exports.answerValidator = (params) => {
     const validParams = {};
 
     if(params._id || params.__v || params.senderId || params.receiverId || params.creationDatetime){
@@ -8,13 +8,13 @@ exports.updateValidator = (params) => {
     }
 
     if (params.status){
-        if(params.status === "CANCEL"){
+        if(params.status === "ACCEPTED" || params.status === "DECLINED"){
             validParams.status = params.status;
 
             if(params.modificationDatetime){
                 validParams.modificationDatetime = params.modificationDatetime;
             }
-
+            
             return validParams
         }
     }

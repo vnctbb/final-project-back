@@ -8,6 +8,11 @@ var likeSchema = new mongoose.Schema({
         required: 'User id parameters required',
         default: null
     },
+    userName : {
+        type : String,
+        required: 'User name parameters required',
+        default: null
+    },
     postId : {
         type : String,
         required: 'Related id parameters required',

@@ -3,14 +3,22 @@
 const mongoose = require('mongoose')
 
 const Topic = mongoose.model('Topic')
+const User = mongoose.model('User')
 
 exports.createTopic = async (req, res, next) => {
+
     const topic = new Topic(req.body.params);
-    
-    req._id = "60b4b6bd911e0e0a18af7877"
 
     topic.ownerId = req._id;
     topic.modificationDatetime = topic.creationDatetime;
+
+    let user = await User.findOne({_id : req._id});
+    if(user){
+        topic.ownerName = user.firstName + " " + user.lastName;
+    } else {
+
+        res.status(400).json({status : true, message : 'Error : User not found'})
+    }
 
     let doc;
     try {

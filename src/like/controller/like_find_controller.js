@@ -6,6 +6,24 @@ const Post = mongoose.model('Post');
 
 const option_validator = require('../validator/list_params_validator');
 
+exports.exist = (req, res, next) => {
+    if(!req.body.postId){
+        return res.status(400).json({status : false, message : "Error : Invalid parameters"});
+    }
+
+    Like.findOne({postId : req.body.postId, userId : req._id}, {__v : 0}, (err, like) => {
+        if(like){
+            if(!err){
+                return res.status(200).json({status : true, exist : true});
+            } else {
+                return next(err);
+            }
+        } else {
+            return res.status(200).json({true : false, exist : false});
+        }
+    });
+}
+
 exports.findLike = (req, res, next) => {
 
     if(!req.body.likeId){

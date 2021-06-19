@@ -3,7 +3,7 @@
 exports.optionValidator = (params) => {
     const validParams = {};
 
-    if (params.skip) {
+    if (params.skip >= 0) {
         validParams.skip = params.skip;
     }
 
@@ -12,7 +12,7 @@ exports.optionValidator = (params) => {
     }
 
     if (params.sort) {
-        validParams.sort[params.sort] = 1;
+        validParams.sort = params.sort;
     }
     
     return validParams;

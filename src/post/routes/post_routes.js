@@ -11,19 +11,19 @@ const post_find_controller = require('../controller/post_find_controller');
 const post_update_controller = require('../controller/post_update_controller');
 const post_delete_controller = require('../controller/post_delete_controller.js');
 
-router.post('/create', post_create_controller.createPost);
+router.post('/create', authentication.verifyJwtToken, post_create_controller.createPost);
 
-router.post('/find', post_find_controller.findOne);
+router.post('/find', authentication.verifyJwtToken, post_find_controller.findOne);
 
-router.post('/list', post_find_controller.list);
+router.post('/list', authentication.verifyJwtToken, post_find_controller.list);
 
-router.post('/list/author', post_find_controller.listByAuthorId);
+router.post('/list/author', authentication.verifyJwtToken, post_find_controller.listByAuthorId);
 
-router.post('/update', post_update_controller.updatePost);
+router.post('/update', authentication.verifyJwtToken, post_update_controller.updatePost);
 
-router.post('/delete', post_delete_controller.deletePost);
+router.post('/delete', authentication.verifyJwtToken, post_delete_controller.deletePost);
 
-router.post('/delete/admin', post_delete_controller.deletePostAdmin);
+router.post('/delete/admin', authentication.verifyJwtToken, security_level.get, post_delete_controller.deletePostAdmin);
 
 // TODO : add like and unlike routes
 

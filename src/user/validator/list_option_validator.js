@@ -5,6 +5,8 @@ exports.optionValidator = (params) => {
 
     if (params.skip) {
         validParams.skip = params.skip;
+    } else {
+        validParams.skip = 0;
     }
 
     if (params.limit) {
@@ -12,7 +14,7 @@ exports.optionValidator = (params) => {
     }
 
     if (params.sort) {
-        validParams.sort[params.sort] = 1;
+        validParams.sort = params.sort;
     }
     
     return validParams;

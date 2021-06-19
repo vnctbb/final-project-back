@@ -11,6 +11,7 @@ exports.authenticate = (req, res, next) => {
         } else if(user){
             return res.status(200).json({ "token" : user.generateJwt() });
         } else {
+            console.log("INFO => ", info)
             return res.status(404).json(info);
         }
     })(req, res);

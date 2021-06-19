@@ -18,10 +18,8 @@ exports.updatePost = async (req, res, next) => {
     if (!validParams){
         return res.status(400).json({status : false, message : 'Invalid parameters'});
     }
-
-    req._id = "60ae71dbd5143b9e0bf3e9b6"
     
-    if (!req.body.post_id){
+    if (!req.body.postId){
         return res.status(400).json({status : false, message : 'Invalid parameters'});
     }
 

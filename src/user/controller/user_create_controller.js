@@ -8,21 +8,21 @@ const User = mongoose.model('User')
 const user_constant = require('../constant/user_constant');
 
 exports.createUser = async (req, res, next) => {
-    const user = new User(req.body.params);
+    const user = new User(req.body);
 
-    user.emailAddress = req.body.params.emailAddress
+    user.emailAddress = req.body.emailAddress
 
     user.securityLevel = user_constant.USER_SECURITY_LEVEL;
+
+    console.log(user.emailAddress)
 
     let doc
     try {
         doc = await user.save();
     } catch (err) {
         if(err.code === 11000){
-
             return res.status(422).json({status : false, message : err.message})
         } else {
-
             return res.status(400).json({status : false, message : err.message})
         }
     }

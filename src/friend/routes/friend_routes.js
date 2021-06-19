@@ -10,19 +10,21 @@ const friend_create_controller = require('../controller/friend_create_controller
 const friend_update_controller = require('../controller/friend_update_controller');
 const friend_find_controller = require('../controller/friend_find_controller');
 
-router.post('/create', friend_create_controller.createFriend);
+router.post('/create', authentication.verifyJwtToken, friend_create_controller.createFriend);
 
-router.post('/update', friend_update_controller.updateFriend);
+router.post('/update', authentication.verifyJwtToken, friend_update_controller.updateFriend);
 
-router.post('/exist', friend_find_controller.exist);
+router.post('/answer', authentication.verifyJwtToken, friend_update_controller.answerFriend);
 
-router.post('/find', friend_find_controller.findOne);
+router.post('/exist', authentication.verifyJwtToken, friend_find_controller.exist);
 
-router.post('/list/in', friend_find_controller.listInByUser);
+router.post('/find', authentication.verifyJwtToken, friend_find_controller.findOne);
 
-router.post('/list/out', friend_find_controller.listOutByUser);
+router.post('/list/in', authentication.verifyJwtToken, friend_find_controller.listInByUser);
 
-router.post('/list/accepted', friend_find_controller.listAcceptedByUser);
+router.post('/list/out', authentication.verifyJwtToken, friend_find_controller.listOutByUser);
+
+router.post('/list/accepted', authentication.verifyJwtToken, friend_find_controller.listAcceptedByUser);
 
 
 module.exports = router;

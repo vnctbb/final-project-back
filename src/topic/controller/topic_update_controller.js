@@ -19,8 +19,6 @@ exports.updateTopic = async (req, res, next) => {
         return res.status(400).json({status : false, message : 'Invalid parameters'});
     }
 
-    req._id = "60a7729837b47452b8c5483e"
-
     if(!req.body._id){
 
         return res.status(400).json({status : false, message : 'Invalid parameters'});

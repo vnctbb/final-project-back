@@ -6,6 +6,16 @@ const Topic = mongoose.model('Topic');
 
 const option_validator = require('../../validator/list_option_validator');
 
+exports.count = async (req, res, next) => {
+    let topicLength = await Topic.count();
+    if (!topicLength){
+
+        return res.status(200).json({status : true, count : 0});
+    }
+
+    return res.status(200).json({status : true, count : topicLength})
+}
+
 exports.findOne = async (req, res, next) => {
 
     if(!req.body.topicId){
@@ -33,7 +43,7 @@ exports.list = async (req, res, next) => {
     let topics = await Topic.find({}, {__v : 0}, optionV);
     if (topics.length == 0){
 
-        return res.status(400).json({status : false, message : "Error : Topics not found"});
+        return res.status(200).json({status : true, topics : []});
     }
 
     return res.status(200).json({status : true, topics : topics});
@@ -48,6 +58,8 @@ exports.listByOwnerId = async (req, res, next) => {
         optionV = option_validator.optionValidator(req.body.params);
     }
 
+    console.log(req.body.params)
+
     if (!req.body.params.ownerId){
 
         return res.status(400).json({status : false, message : "Error : Invalid parameters"});
@@ -59,10 +71,10 @@ exports.listByOwnerId = async (req, res, next) => {
         return res.status(400).json({status : false, message : "Error : Owner not found"});
     }
 
-    let topics = await Topic.find({owner_id : req.body.params.ownerId}, {__v : 0, owner_id : 0}, optionV);
+    let topics = await Topic.find({ownerId : req.body.params.ownerId}, {__v : 0, owner_id : 0}, optionV);
     if (topics.length == 0){
 
-        return res.status(400).json({status : false, message : "Error : Topics not found"});
+        return res.status(200).json({status : true, topics : []});
     }
 
     return res.status(200).json({status : true, topics : topics});

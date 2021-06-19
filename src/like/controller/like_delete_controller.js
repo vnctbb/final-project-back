@@ -6,28 +6,25 @@ const Like = mongoose.model('Like');
 
 exports.deleteLike = async (req, res, next) => {
     
-    if(!req.body.like_id){
+    if(!req.body.postId){
         return res.status(404).json({status : false, message : 'Invalid parameters.'});
     }
 
-    req._id = "60ae71dbd5143b9e0bf3e9b6"
-
     let like;
     try {
-        like = await Like.findOne({_id : req.body.like_id, user_id : req._id});
+        like = await Like.findOne({postId : req.body.postId, userId : req._id});
     } catch (err) {
 
         return res.status(400).json({status : false, error : err});
     }
 
     if (!like){
-
         return res.status(400).json({status : false, message : 'Like not found.'});
     }
 
     let likeDelete;
     try {
-        likeDelete = await Like.deleteOne({_id : req.body.like_id});
+        likeDelete = await Like.deleteOne({_id : like._id});
     } catch (err) {
 
         return res.status(400).json({status : false, error : err});

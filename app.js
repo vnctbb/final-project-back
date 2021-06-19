@@ -16,6 +16,7 @@ const postcom_route = require('./src/postcom/routes/postcom_routes');
 const like_route = require('./src/like/routes/like_routes');
 const topic_route = require('./src/topic/routes/topic_routes');
 const topicmessage_route = require('./src/topicmessage/routes/topicmessage_routes');
+const picture_route = require('./src/picture/routes/picture_routes');
 
 const app = express();
 
@@ -40,6 +41,7 @@ app.use('/postcom', postcom_route);
 app.use('/like', like_route);
 app.use('/topic', topic_route);
 app.use('/topicmessage', topicmessage_route);
+app.use('/picture', picture_route);
 
 // Error management
 app.use((err, req, res, next) => {
@@ -48,6 +50,7 @@ app.use((err, req, res, next) => {
         Object.keys(err.errors).forEach(key => {
             valErrors.push(err.errors[key].message);
         });
+        console.log(valErrors)
         res.status(422).send(valErrors);
     } else {
         console.log(err)

@@ -3,13 +3,39 @@
 const mongoose = require('mongoose');
 
 const Post = mongoose.model('Post');
+const User = mongoose.model('User');
 const Like = mongoose.model('Like');
 
 exports.createLike = async (req, res, next) => {
     const like = new Like(req.body.params);
-    req._id = "60ae71dbd5143b9e0bf3e9b6";
 
     like.userId = req._id;
+
+    let user;
+    try {
+
+        user = await User.findOne({_id : req._id});
+    } catch (err) {
+
+        return res.status(400).json({status : false, error : err});
+    }
+
+    let likeCheck;
+    try {
+
+        likeCheck = await Like.findOne({userId : req._id, postId : like.postId});
+    } catch (err) {
+
+        return res.status(400).json({status : false, error : err});
+    }
+    if (likeCheck){
+
+        return res.status(400).json({status : false, message: "Error : Post already liked", likeId : likeCheck._id});
+    }
+
+    like.userName = user.firstName + " " + user.lastName;
+
+    console.log(like)
 
     let post; 
     try {
