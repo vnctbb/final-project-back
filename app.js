@@ -21,7 +21,6 @@ const app = express();
 
 // CORS Middleware
 app.use(cors());
-app.options('*', cors());
 
 // Body Parser Middleware
 app.use( bodyParser.urlencoded({ extended: true }) );
