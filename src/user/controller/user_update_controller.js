@@ -36,3 +36,37 @@ exports.updateProfile = (req, res, next) => {
     });
 
 };
+
+exports.setProfilPicture = (req, res, next) => {
+
+    if(!req.body.filename){
+        return res.status(404).json({status : false, message : `Error updating user => Invalid parameters`});
+    }
+
+    User.findOneAndUpdate({_id : req._id}, { $set: {profilPicture : req.body.filename} }, (err, user) => {
+        if (!err) {
+            if(user){
+                res.status(200).json({status : true, message : 'User updated', id : user._id})
+            } else {
+                return res.status(404).json({status : false, message : `Error updating user => user not found`});
+            }
+        } else {
+            return res.status(404).json({status : false, message : `Error updating user => ${err}`});
+        }
+    });
+};
+
+exports.unsetProfilPicture = (req, res, next) => {
+
+    User.findOneAndUpdate({_id : req._id}, { $set: {profilPicture : null} }, (err, user) => {
+        if (!err) {
+            if(user){
+                res.status(200).json({status : true, message : 'User updated', id : user._id})
+            } else {
+                return res.status(404).json({status : false, message : `Error updating user => user not found`});
+            }
+        } else {
+            return res.status(404).json({status : false, message : `Error updating user => ${err}`});
+        }
+    });
+};

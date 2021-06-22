@@ -18,6 +18,10 @@ var postComSchema = new mongoose.Schema({
         required: 'Author name parameters required',
         default: null
     },
+    authorPicture : {
+        type : String,
+        required: 'author picture parameters required',
+    },
     creationDatetime : {
         type : String,
         required: 'Creation datetime parameters required',

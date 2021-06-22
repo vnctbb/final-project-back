@@ -35,6 +35,10 @@ router.post('/profile/picture', authentication.verifyJwtToken, user_profile_cont
 
 router.post('/update', authentication.verifyJwtToken, user_update_controller.updateProfile);
 
+router.post('/set/profile/picture', authentication.verifyJwtToken, user_update_controller.setProfilPicture);
+
+router.get('/unset/profile/picture', authentication.verifyJwtToken, user_update_controller.unsetProfilPicture);
+
 router.get('/delete', authentication.verifyJwtToken, user_delete_controller.deleteUser);
 
 router.post('/find/list', authentication.verifyJwtToken, security_level.get, user_find_controller.findList);

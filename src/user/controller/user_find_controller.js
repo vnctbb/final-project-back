@@ -111,7 +111,7 @@ exports.search = async (req, res, next) => {
         firstName : 1,
         lastName : 1,
         emailAddress : 1,
-        securityLevel : 1
+        profilPicture : 1
     }
 
     let optionV = {};
@@ -134,7 +134,7 @@ exports.search = async (req, res, next) => {
     const firstPart = searchValue.substr(0,firstSpace)
     const secondPart = searchValue.substr(firstSpace + 1, secondSpace)
 
-    let users = await User.find({firstName : new RegExp(firstPart, 'i'), lastName : new RegExp(secondPart, 'i') }, fields, optionV)
+    let users = await User.find({firstName : new RegExp(firstPart, 'i'), lastName : new RegExp(secondPart, 'i'), _id: { $ne: req._id } }, fields, optionV)
 
     let allUserId  = [];
     if(users.length > 0){
@@ -142,14 +142,14 @@ exports.search = async (req, res, next) => {
     }
 
     if(users.length == 0){
-        users = await User.find({firstName : new RegExp(secondPart, 'i'), lastName : new RegExp(firstPart, 'i') }, fields, optionV)
+        users = await User.find({firstName : new RegExp(secondPart, 'i'), lastName : new RegExp(firstPart, 'i'), _id: { $ne: req._id }  }, fields, optionV)
     } else {
         if(req.body.params.limit){
             if (users.length < (optionV.limit -optionV.skip)){
                 
                 optionV.limit = optionV.limit -optionV.skip;
 
-                let moreUsers = await User.find({firstName : new RegExp(secondPart, 'i'), lastName : new RegExp(firstPart, 'i'), _id: {$nin: allUserId} }, fields, optionV);
+                let moreUsers = await User.find({firstName : new RegExp(secondPart, 'i'), lastName : new RegExp(firstPart, 'i'), _id: {$nin: allUserId, $ne: req._id} }, fields, optionV);
 
                 if (moreUsers.length > 0) {
                     moreUsers.forEach(item => users.push(item))
@@ -165,14 +165,14 @@ exports.search = async (req, res, next) => {
 
     if(firstPart.length > 0 && secondPart.length > 0){
         if(users.length == 0){
-            users = await User.find({firstName : {$in : [new RegExp(firstPart, 'i'), new RegExp(secondPart, 'i')]}}, fields, optionV)
+            users = await User.find({firstName : {$in : [new RegExp(firstPart, 'i'), new RegExp(secondPart, 'i')], _id: { $ne: req._id } }}, fields, optionV)
         } else {
             if(req.body.params.limit){
                 if (users.length < (optionV.limit -optionV.skip)){
                     
                     optionV.limit = optionV.limit -optionV.skip;
     
-                    let moreUsers = await User.find({firstName :{$in : [new RegExp(firstPart, 'i'), new RegExp(secondPart, 'i')]}, _id: {$nin: allUserId}}, fields, optionV)
+                    let moreUsers = await User.find({firstName :{$in : [new RegExp(firstPart, 'i'), new RegExp(secondPart, 'i')]}, _id: {$nin: allUserId}, _id: { $ne: req._id } }, fields, optionV)
     
                     if (moreUsers.length > 0) {
                         moreUsers.forEach(item => users.push(item))
@@ -187,14 +187,14 @@ exports.search = async (req, res, next) => {
         }
     
         if(users.length == 0){
-            users = await User.find({lastName : {$in : [new RegExp(firstPart, 'i'), new RegExp(secondPart, 'i')]}}, fields, optionV)
+            users = await User.find({lastName : {$in : [new RegExp(firstPart, 'i'), new RegExp(secondPart, 'i')]}, _id: { $ne: req._id } }, fields, optionV)
         } else {
             if(req.body.params.limit){
                 if (users.length < (optionV.limit -optionV.skip)){
                     
                     optionV.limit = optionV.limit -optionV.skip;
     
-                    let moreUsers = await User.find({lastName :{$in: [new RegExp(firstPart, 'i'), new RegExp(secondPart, 'i')]}, _id: {$nin: allUserId}}, fields, optionV)
+                    let moreUsers = await User.find({lastName :{$in: [new RegExp(firstPart, 'i'), new RegExp(secondPart, 'i')]}, _id: {$nin: allUserId, $ne: req._id}}, fields, optionV)
     
                     console.log(moreUsers)
     
@@ -207,14 +207,14 @@ exports.search = async (req, res, next) => {
     } else {
         if (firstPart.length > 0) {
             if(users.length == 0){
-                users = await User.find({firstName : new RegExp(firstPart, 'i')}, fields, optionV)
+                users = await User.find({firstName : new RegExp(firstPart, 'i'), _id: { $ne: req._id } }, fields, optionV)
             } else {
                 if(req.body.params.limit){
                     if (users.length < (optionV.limit -optionV.skip)){
                         
                         optionV.limit = optionV.limit -optionV.skip;
         
-                        let moreUsers = await User.find({firstName : new RegExp(firstPart, 'i'), _id: {$nin: allUserId}}, fields, optionV)
+                        let moreUsers = await User.find({firstName : new RegExp(firstPart, 'i'), _id: {$nin: allUserId, $ne: req._id}}, fields, optionV)
         
                         if (moreUsers.length > 0) {
                             moreUsers.forEach(item => users.push(item))
@@ -231,14 +231,14 @@ exports.search = async (req, res, next) => {
         } else {
             if (secondPart.length > 0) {
                 if(users.length == 0){
-                    users = await User.find({lastName : new RegExp(secondPart, 'i')}, fields, optionV)
+                    users = await User.find({lastName : new RegExp(secondPart, 'i'), _id: { $ne: req._id } }, fields, optionV)
                 } else {
                     if(req.body.params.limit){
                         if (users.length < (optionV.limit -optionV.skip)){
                             
                             optionV.limit = optionV.limit -optionV.skip;
             
-                            let moreUsers = await User.find({lastName : new RegExp(firstPart, 'i'), _id: {$nin: allUserId}}, fields, optionV)
+                            let moreUsers = await User.find({lastName : new RegExp(firstPart, 'i'), _id: {$nin: allUserId, $ne: req._id}}, fields, optionV)
             
                             if (moreUsers.length > 0) {
                                 moreUsers.forEach(item => users.push(item))

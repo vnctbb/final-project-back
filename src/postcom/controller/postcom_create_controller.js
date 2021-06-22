@@ -19,6 +19,14 @@ exports.createPostCom = async (req, res, next) => {
         return res.status(400).json({status : false, error : err});
     }
 
+    if(user.profilPicture){
+
+        post.authorPicture = user.profilPicture
+    } else {
+
+        post.authorPicture = "none"
+    }
+
     postcom.authorName = user.firstName + " " + user.lastName;
 
     let post;

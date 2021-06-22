@@ -17,6 +17,13 @@ exports.createPost = async (req, res, next) => {
         return res.status(400).json({status : false, message : "Error : Author not found"});
     }
 
+    if(user.profilPicture){
+
+        post.authorPicture = user.profilPicture
+    } else {
+
+        post.authorPicture = "none"
+    }
     post.authorName = user.firstName + " " + user.lastName;
 
     post.save((err, doc) => {
