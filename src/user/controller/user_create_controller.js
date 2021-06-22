@@ -16,13 +16,12 @@ exports.createUser = async (req, res, next) => {
 
     user.creationDatetime = Date.now();
 
-    console.log(user.emailAddress)
-
     let doc
     try {
         doc = await user.save();
     } catch (err) {
         if(err.code === 11000){
+            console.log(err)
             return res.status(422).json({status : false, message : err.message})
         } else {
             return res.status(400).json({status : false, message : err.message})
