@@ -8,12 +8,12 @@ exports.authenticate = (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
         if(err){
             console.log("ERR => ", err)
-            return res.status(400).json({error : err, 'message' : "IF ERR"});
+            return res.status(400).json({"err":err, "message":err.message, "error" : error});
         } else if(user){
             return res.status(200).json({ "token" : user.generateJwt() });
         } else {
             console.log("INFO => ", info)
-            return res.status(404).json({error : err, 'message' : "INFO"});
+            return res.status(404).json(info);
         }
     })(req, res);
 };
