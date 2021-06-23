@@ -8,8 +8,6 @@ const PostCom = mongoose.model('PostCom');
 
 exports.createPostCom = async (req, res, next) => {
     const postcom = new PostCom(req.body.params);
-
-    console.log('ici')
     
     postcom.authorId = req._id;
     postcom.modificationDatetime = postcom.creationDatetime;
@@ -55,5 +53,5 @@ exports.createPostCom = async (req, res, next) => {
         return res.status(400).json({status : false, message : "Error : PostCom not created"});
     }
 
-    res.status(200).json({status : true, message : 'PostCom created', doc : doc})
+    res.status(200).json({status : true, message : 'PostCom created', doc : doc, picture : postcom.authorPicture})
 }
