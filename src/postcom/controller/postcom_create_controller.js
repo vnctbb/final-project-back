@@ -8,6 +8,8 @@ const PostCom = mongoose.model('PostCom');
 
 exports.createPostCom = async (req, res, next) => {
     const postcom = new PostCom(req.body.params);
+
+    console.log('ici')
     
     postcom.authorId = req._id;
     postcom.modificationDatetime = postcom.creationDatetime;
@@ -21,10 +23,10 @@ exports.createPostCom = async (req, res, next) => {
 
     if(user.profilPicture){
 
-        post.authorPicture = user.profilPicture
+        postcom.authorPicture = user.profilPicture
     } else {
 
-        post.authorPicture = "none"
+        postcom.authorPicture = "none"
     }
 
     postcom.authorName = user.firstName + " " + user.lastName;
