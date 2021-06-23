@@ -60,10 +60,6 @@ exports.list = async (req, res, next) => {
     }
 
     let friends = await Friend.find({$or : [{ senderId: req._id }, { receiverId: req._id }], status : 'ACCEPTED'}, {__v : 0, saltSecret : 0, password : 0}, optionV)
-    if(friends.length == 0){
-
-        return res.status(200).json({status : false, posts : []});
-    }
 
     const postSearchFriend = [];
     friends.forEach(item => {
@@ -78,6 +74,8 @@ exports.list = async (req, res, next) => {
     postSearchFriend.push(req._id)
 
     let postsCount = await Post.count({authorId : postSearchFriend})
+
+    console.log(postSearchFriend)
 
     let posts = await Post.find({authorId : postSearchFriend}, {__v : 0}, optionV)
     if (posts.length == 0){
