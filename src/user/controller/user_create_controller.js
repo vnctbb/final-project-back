@@ -56,7 +56,7 @@ exports.createAdmin = async (req, res, next) => {
     } catch (err) {
         if(err.code === 11000){
 
-            return res.status(422).json({status : false, message : 'Provided email already used'})
+            return res.status(422).json({status : false, message : 'Addresse email non disponible'})
         } else {
 
             return res.status(400).json({status : true, message : 'Error : User not created'})
